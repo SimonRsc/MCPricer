@@ -36,7 +36,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(src/3rdparty/jlparser)
-add_subdirectory(tests)
 
 # Test the parser
 add_executable(test-parser src/test_parser.cpp src/PricingResults.cpp src/PnlVectToJson.cpp)
@@ -53,3 +52,6 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
 else()
     message(STATUS "C++ Flags: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_LINKER_EXE_FLAGS}" )
 endif()
+
+add_subdirectory(tests)
+add_subdirectory(src)
