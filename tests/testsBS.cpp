@@ -42,6 +42,7 @@ TEST_F(BSTest, test_bsNext) {
     pnl_rng_free(&rng);
     pnl_vect_free(&vol);
     pnl_vect_free(&spot);
+    delete BS;
 }
 
 int main(int argc, char **argv)

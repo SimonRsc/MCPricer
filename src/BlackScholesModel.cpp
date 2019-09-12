@@ -15,6 +15,19 @@ void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *r
     }
 }
 
+void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
+    double dt = T/nbTimeSteps;
+    double tmpDate = 0;
+    int index = 0;
+    while (tmpDate < t){
+        for (int c = 0; c < size_; ++c) {
+            MLET(path, c, index) = MGET(past, c,index);
+        }
+        tmpDate += dt;
+        index++;
+    }
+}
+
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
     if (rho_>=1 || rho_<= -1/(size_-1)){
         throw std::invalid_argument("Rho should be in ]−1/(D−1),1[");
