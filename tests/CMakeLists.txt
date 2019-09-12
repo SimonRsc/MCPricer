@@ -35,9 +35,6 @@ add_executable(sample gtest-sample.cpp)
 target_link_libraries(sample gtest)
 add_test (NAME sample COMMAND sample)
 
-set(SRC
-    CallOption.cpp
-)
 
 add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
