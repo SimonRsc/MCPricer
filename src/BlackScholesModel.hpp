@@ -60,6 +60,8 @@ public:
     double next(double Std, int productIndex, double dt, PnlRng *randomGenerator);
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
+
+    virtual ~BlackScholesModel();
 };
 
 
