@@ -3,6 +3,8 @@
 #include "pnl/pnl_random.h"
 #include "pnl/pnl_vector.h"
 #include "pnl/pnl_matrix.h"
+#include <stdexcept>
+#include <math.h>
 
 /// \brief Modèle de Black Scholes
 class BlackScholesModel
@@ -13,6 +15,7 @@ public:
     double rho_; /// paramètre de corrélation
     PnlVect *sigma_; /// vecteur de volatilités
     PnlVect *spot_; /// valeurs initiales des sous-jacents
+    PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
 
     /**
      * Génère une trajectoire du modèle et la stocke dans path
@@ -53,6 +56,10 @@ public:
      */
     void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
 
+    PnlMat* CholeskyCorrelationMatrix();
+    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator);
+
+    BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
 };
 
 
