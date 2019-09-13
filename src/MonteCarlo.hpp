@@ -2,7 +2,7 @@
 
 #include "Option.hpp"
 #include "BlackScholesModel.hpp"
-#include "pnl/pnl_random.h"
+#include "pnl/pnl_matrix.h"
 
 class MonteCarlo
 {
