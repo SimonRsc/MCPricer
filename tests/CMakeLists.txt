@@ -38,11 +38,13 @@ add_test (NAME sample COMMAND sample)
 set(SRC
         ../src/CallOption.cpp
         ../src/BasketOption.cpp
+        ../src/AsianOption.cpp
 )
 
 set(HEADERS
         ../src/CallOption.h
         ../src/BasketOption.h
+        ../src/AsianOption.h
         ../src/Option.hpp
 )
 

@@ -11,7 +11,6 @@ class BasketOption : public Option{
 public:
     BasketOption(double *lambdas, double k, double T_, int nbTimeSteps, int size_);
 
-    BasketOption();
 
     virtual double payoff(const PnlMat *path);
     double *lambdas;
