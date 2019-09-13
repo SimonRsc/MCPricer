@@ -52,6 +52,8 @@ add_library(MCPricer ${SRC} ${HEADERS})
 add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
 target_link_libraries(PayoffTest ${PNL_LIBRARIES})
+target_link_libraries(PayoffTest gtest)
+
 
 
 add_executable(pnlTests pnlTests.cpp )

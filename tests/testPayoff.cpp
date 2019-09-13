@@ -5,61 +5,74 @@
 #include <assert.h>
 #include "../src/CallOption.h"
 #include "../src/BasketOption.h"
+#include "gtest/gtest.h"
+#include "../cmake-build-debug/tests/googletest-src/googletest/include/gtest/gtest.h"
+#include <sstream>
 
 using namespace std;
 
-void test_call_payoff(){
+class PayoffTests : public ::testing::Test {
+
+protected:
+    virtual void SetUp() {
+        // Code here will be called immediately after the constructor (right
+        // before each test).
+    }
+
+    virtual void TearDown() {
+        // Code here will be called immediately after each test (right
+        // before the destructor).
+    }
+    // Objects declared here can be used by all tests in the test case for Foo.
+};
+
+TEST_F(PayoffTests, BasketTests) {
+PnlMat* matrix = pnl_mat_create(10,4);
+MLET(matrix,0,0) = 3.25;
+MLET(matrix,1,0) = 4.75;
+MLET(matrix,2,0) = 3.98;
+MLET(matrix,3,0) = 5.33;
+MLET(matrix,4,0) = 2.66;
+MLET(matrix,5,0) = 7.81;
+
+MLET(matrix,0,1) = 8.82;
+MLET(matrix,1,1) = 7.02;
+MLET(matrix,2,1) = 9.0697;
+MLET(matrix,3,1) = 2.22;
+MLET(matrix,4,1) = 2.406;
+MLET(matrix,5,1) = 3.14;
+
+MLET(matrix,0,2) = 5;
+MLET(matrix,1,2) = 3.52;
+MLET(matrix,2,2) = 2.32;
+MLET(matrix,3,2) = 4.12;
+MLET(matrix,4,2) = 1.97;
+MLET(matrix,5,2) = 6.09;
+
+double lambda[] = {0.2, 0.35, 0.45};
+
+BasketOption basketOption(lambda,5,6,6,3);
+double resultPayoff = basketOption.payoff(matrix);
+pnl_mat_free(&matrix);
+EXPECT_FLOAT_EQ(resultPayoff,0.4015);
+}
+
+TEST_F(PayoffTests, CallTests) {
     PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
     CallOption option(10,10,1,1);
     double res1 = option.payoff(matrix);
-    cout << res1 << endl;
 
     CallOption optionBis(19,10,1,1);
     double res2 = optionBis.payoff(matrix);
-    cout << res2 << endl;
     pnl_mat_free(&matrix);
 
-    assert(res1 == 2.5);
-    assert(res2 == 0);
-
+    EXPECT_EQ(res1,2.5);
+    EXPECT_EQ(res2,0);
 
 }
 
-
-void test_basket_payoff(){
-    PnlMat* matrix = pnl_mat_create(10,4);
-    MLET(matrix,0,0) = 3.25;
-    MLET(matrix,1,0) = 4.75;
-    MLET(matrix,2,0) = 3.98;
-    MLET(matrix,3,0) = 5.33;
-    MLET(matrix,4,0) = 2.66;
-    MLET(matrix,5,0) = 7.81;
-
-    MLET(matrix,0,1) = 8.82;
-    MLET(matrix,1,1) = 7.02;
-    MLET(matrix,2,1) = 9.0697;
-    MLET(matrix,3,1) = 2.22;
-    MLET(matrix,4,1) = 2.406;
-    MLET(matrix,5,1) = 3.14;
-
-    MLET(matrix,0,2) = 5;
-    MLET(matrix,1,2) = 3.52;
-    MLET(matrix,2,2) = 2.32;
-    MLET(matrix,3,2) = 4.12;
-    MLET(matrix,4,2) = 1.97;
-    MLET(matrix,5,2) = 6.09;
-
-    double lambda[] = {0.2, 0.35, 0.45};
-
-    BasketOption basketOption(lambda,5,6,6,3);
-    double resultPayoff = basketOption.payoff(matrix);
-    //double attend = 0.4015;
-    cout << resultPayoff << endl;
-    pnl_mat_free(&matrix);
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
-
-int main(void){
-    //test_call_payoff();
-    test_basket_payoff();
-}
-
