@@ -9,11 +9,11 @@
 
 class BasketOption : public Option{
 public:
-    BasketOption(double *lambdas, double k);
+    BasketOption(double *lambdas, double k, double T_, int nbTimeSteps, int size_);
+
+    BasketOption();
 
     virtual double payoff(const PnlMat *path);
-
-private:
     double *lambdas;
     double K_;
 

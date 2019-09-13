@@ -4,6 +4,7 @@
 #include <iostream>
 #include <assert.h>
 #include "../src/CallOption.h"
+#include "../src/BasketOption.h"
 
 using namespace std;
 
@@ -24,7 +25,41 @@ void test_call_payoff(){
 
 }
 
+
+void test_basket_payoff(){
+    PnlMat* matrix = pnl_mat_create(10,4);
+    MLET(matrix,0,0) = 3.25;
+    MLET(matrix,1,0) = 4.75;
+    MLET(matrix,2,0) = 3.98;
+    MLET(matrix,3,0) = 5.33;
+    MLET(matrix,4,0) = 2.66;
+    MLET(matrix,5,0) = 7.81;
+
+    MLET(matrix,0,1) = 8.82;
+    MLET(matrix,1,1) = 7.02;
+    MLET(matrix,2,1) = 9.0697;
+    MLET(matrix,3,1) = 2.22;
+    MLET(matrix,4,1) = 2.406;
+    MLET(matrix,5,1) = 3.14;
+
+    MLET(matrix,0,2) = 5;
+    MLET(matrix,1,2) = 3.52;
+    MLET(matrix,2,2) = 2.32;
+    MLET(matrix,3,2) = 4.12;
+    MLET(matrix,4,2) = 1.97;
+    MLET(matrix,5,2) = 6.09;
+
+    double lambda[] = {0.2, 0.35, 0.45};
+
+    BasketOption basketOption(lambda,5,6,6,3);
+    double resultPayoff = basketOption.payoff(matrix);
+    //double attend = 0.4015;
+    cout << resultPayoff << endl;
+    pnl_mat_free(&matrix);
+}
+
 int main(void){
-    test_call_payoff();
+    //test_call_payoff();
+    test_basket_payoff();
 }
 
