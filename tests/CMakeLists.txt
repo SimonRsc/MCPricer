@@ -54,7 +54,6 @@ add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
 target_link_libraries(PayoffTest ${PNL_LIBRARIES})
 
-
 add_executable(pnlTests pnlTests.cpp )
 target_link_libraries(pnlTests ${PNL_LIBRARIES})
 
@@ -62,4 +61,7 @@ add_executable(testMonteCarlo testMonteCarlo.cpp)
 target_link_libraries(testMonteCarlo ${PNL_LIBRARIES})
 
 target_link_libraries(testMonteCarlo MCPricer)
-
+add_executable(testsBS testsBS.cpp )
+target_link_libraries(testsBS MCPricer)
+target_link_libraries(testsBS gtest)
+target_link_libraries(testsBS ${PNL_LIBRARIES})
