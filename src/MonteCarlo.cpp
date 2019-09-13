@@ -14,6 +14,7 @@ void MonteCarlo::price(double &prix, double &ic){
     double phi =0;
     int nbAssets = this->mod_->size_;
     int nbTimeSteps = this->opt_->nbTimeSteps_;
+
     PnlMat *path = pnl_mat_create(nbTimeSteps+1, nbAssets);
 
     double estim = 0;
@@ -27,7 +28,7 @@ void MonteCarlo::price(double &prix, double &ic){
         sumSquare += pow(phi, 2);
     }
 
-
+    pnl_mat_free(& path);
 
     prix = exp(-this->mod_->r_ * this->opt_->T_) * sum / this->nbSamples_;
 
