@@ -13,7 +13,7 @@ void testMonteCarlo() {
     CallOption *opt = new CallOption(5, 5, 5, 3);
 
     //Création d'un modele BS
-    BlackScholesModel *mod = new FakeBlackScholesModel();
+    BlackScholesModel *mod = new BlackScholesModel(5, 0.02, 0, pnl_vect_create_from_scalar(5, 0.25), pnl_vect_create_from_scalar(5, 10));
 
     mod->size_ = 5;
 
