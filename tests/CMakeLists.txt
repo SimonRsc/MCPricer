@@ -35,18 +35,15 @@ add_executable(sample gtest-sample.cpp)
 target_link_libraries(sample gtest)
 add_test (NAME sample COMMAND sample)
 
-set(SRC
-    CallOption.cpp
-)
-
-
-add_library(MCPricer ../src/${SRC})
-
 
 add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
 target_link_libraries(PayoffTest ${PNL_LIBRARIES})
 
-
 add_executable(pnlTests pnlTests.cpp )
 target_link_libraries(pnlTests ${PNL_LIBRARIES})
+
+add_executable(testsBS testsBS.cpp )
+target_link_libraries(testsBS MCPricer)
+target_link_libraries(testsBS gtest)
+target_link_libraries(testsBS ${PNL_LIBRARIES})
