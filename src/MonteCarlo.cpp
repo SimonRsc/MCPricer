@@ -33,11 +33,9 @@ void MonteCarlo::price(double &prix, double &ic){
     prix = exp(-this->mod_->r_ * this->opt_->T_) * sum / this->nbSamples_;
 
     //Calcul de l'estimateur
-
-    estim = exp(-2 * this->mod_->r_ * this->opt_->T_) * ((sumSquare/this->nbSamples_) - pow(sum/this->nbSamples_,2));
+    estim = (double) exp(-2 * this->mod_->r_ * this->opt_->T_) * ((sumSquare/this->nbSamples_) - pow(sum/this->nbSamples_,2));
 
     //Calcul de l'intervalle de confiance a 95%
-
     ic = 2 * 1.96 * sqrt(estim) / sqrt(this->nbSamples_);
 }
 
