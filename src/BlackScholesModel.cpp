@@ -21,11 +21,21 @@ void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps,
     int index = 0;
     while (tmpDate < t){
         for (int c = 0; c < size_; ++c) {
-            MLET(path, c, index) = MGET(past, c,index);
+            MLET(path, index, c) = MGET(past, index, c);
         }
         tmpDate += dt;
         index++;
     }
+    for (int c = 0; c < size_; ++c) {
+        MLET(path, index, c) = next(MGET(past, index, c), c, tmpDate-t,rng);
+    }
+    index ++;
+    for (int i = index; i < nbTimeSteps+1; ++i) {
+        for (int j = 0; j < size_; ++j) {
+            MLET(path, i, j) = next(MGET(path, i-1, j), j, dt, rng);;
+        }
+    }
+
 }
 
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
