@@ -5,13 +5,12 @@
 
 void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng) {
     double dt = T/nbTimeSteps;
-    double tmp;
     for (int c = 0; c < size_; ++c) {
-        MLET(path, c, 0) = GET(spot_, c);
+        MLET(path, 0, c) = GET(spot_, c);
     }
-    for (int j = 1; j < nbTimeSteps+1; ++j) {
-        for (int i = 0; i < size_; ++i) {
-            MLET(path, i, j) = next(MGET(path, i, j-1), i, dt, rng);;
+    for (int i = 1; i < nbTimeSteps+1; ++i) {
+        for (int j = 0; j < size_; ++j) {
+            MLET(path, i, j) = next(MGET(path, i-1, j), j, dt, rng);;
         }
     }
 }
