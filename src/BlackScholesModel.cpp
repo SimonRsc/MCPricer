@@ -6,17 +6,30 @@
 void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng) {
     double dt = T/nbTimeSteps;
     for (int c = 0; c < size_; ++c) {
-        MLET(path, c, 0) = GET(spot_, c);
+        MLET(path, 0, c) = GET(spot_, c);
     }
-    for (int j = 1; j < nbTimeSteps+1; ++j) {
-        for (int i = 0; i < size_; ++i) {
-            MLET(path, i, j) = next(MGET(path, i-1, j), i, dt, rng);
+    for (int i = 1; i < nbTimeSteps+1; ++i) {
+        for (int j = 0; j < size_; ++j) {
+            MLET(path, i, j) = next(MGET(path, i-1, j), j, dt, rng);;
         }
     }
 }
 
+void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
+    double dt = T/nbTimeSteps;
+    double tmpDate = 0;
+    int index = 0;
+    while (tmpDate < t){
+        for (int c = 0; c < size_; ++c) {
+            MLET(path, c, index) = MGET(past, c,index);
+        }
+        tmpDate += dt;
+        index++;
+    }
+}
+
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
-    if (rho_>=1 || rho_<= -1/(size_-1)){
+    if (rho_>=1 || rho_<= -1/(((double)size_)-1)){
         throw std::invalid_argument("Rho should be in ]−1/(D−1),1[");
     }
     PnlMat *corrMatrix = pnl_mat_create_from_scalar(size_, size_, rho_);

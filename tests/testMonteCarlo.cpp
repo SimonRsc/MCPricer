@@ -10,12 +10,12 @@ using namespace std;
 
 void testMonteCarlo() {
     //Création d'un call
-    CallOption *opt = new CallOption(5, 5, 5, 3);
+    CallOption *opt = new CallOption(5, 5, 5, 1);
 
     //Création d'un modele BS
-    BlackScholesModel *mod = new FakeBlackScholesModel();
+    BlackScholesModel *mod = new BlackScholesModel(1, 0.02, 0, pnl_vect_create_from_scalar(1, 0.25), pnl_vect_create_from_scalar(1, 10));
 
-    mod->size_ = 5;
+    mod->size_ = 1;
 
     //Creation de Monte Carlo
 
@@ -24,6 +24,8 @@ void testMonteCarlo() {
     MC.opt_ = opt;
     MC.mod_ = mod;
     MC.nbSamples_ = 1;
+    MC.rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    pnl_rng_sseed(MC.rng_, 0);
 
 
     double prix;

@@ -56,7 +56,20 @@ public:
      */
     void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
 
+    /**
+     * Calcule la factorisée de Cholesky de la matrice Γ à partir du champ rho
+     * @return la factorisée L
+     */
     PnlMat* CholeskyCorrelationMatrix();
+
+    /**
+     * Calcule la prochaine itération du modèle de Black and Scholes pour un actif donné.
+     * @param Std La précédente valeur de l'actif
+     * @param productIndex l'index de l'actif dans sigma et spot
+     * @param dt (ti+1 - ti)
+     * @param randomGenerator le générateur aléatoire du modèle
+     * @return La prochaine valeur de l'actif dans le modèle
+     */
     double next(double Std, int productIndex, double dt, PnlRng *randomGenerator);
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
