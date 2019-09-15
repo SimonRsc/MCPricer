@@ -24,10 +24,10 @@ ReadData::ReadData(int argc, char **argv) {
     P->extract("volatility", sigma, size);
     P->extract("interest rate", r);
     P->extract("correlation", correlation);
-    if (P->extract("dividend rate", divid, size, true) == false)
-    {
-        divid = pnl_vect_create_from_zero(size);
-    }
+//    if (P->extract("dividend rate", divid, size, true) == false)
+//    {
+//        divid = pnl_vect_create_from_zero(size);
+//    }
     P->extract("strike", strike);
     P->extract("sample number", n_samples);
     P->extract("timestep number", timestep_number);
