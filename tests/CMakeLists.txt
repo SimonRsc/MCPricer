@@ -39,6 +39,7 @@ set(SRC
         ../src/CallOption.cpp
         ../src/BasketOption.cpp
         ../src/AsianOption.cpp
+        ../src/PerformanceOption.cpp
 )
 
 set(HEADERS
@@ -46,6 +47,7 @@ set(HEADERS
         ../src/BasketOption.h
         ../src/AsianOption.h
         ../src/Option.hpp
+        ../src/PerformanceOption.h
 )
 
 add_library(MCPricer ${SRC} ${HEADERS})
