@@ -16,7 +16,7 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST_F(FooTest, WhatDoesTheTest) {
+TEST_F(FooTest, jhvjhbjhbjhb) {
     EXPECT_EQ(0, 0);
 }
 
