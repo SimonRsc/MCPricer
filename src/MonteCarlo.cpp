@@ -15,7 +15,7 @@ void MonteCarlo::price(double &prix, double &ic){
     int nbAssets = this->mod_->size_;
     int nbTimeSteps = this->opt_->nbTimeSteps_;
 
-    PnlMat *path = pnl_mat_create(nbTimeSteps+1, nbAssets);
+    PnlMat *path = pnl_mat_create(nbAssets, nbTimeSteps+1);
 
     double estim = 0;
 

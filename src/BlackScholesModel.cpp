@@ -11,9 +11,7 @@ void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *r
     }
     for (int j = 1; j < nbTimeSteps+1; ++j) {
         for (int i = 0; i < size_; ++i) {
-            tmp = MGET(path, i, j-1);
-            tmp = next(tmp, i, dt, rng);
-            MLET(path, i, j) = tmp;
+            MLET(path, i, j) = next(MGET(path, i, j-1), i, dt, rng);;
         }
     }
 }
