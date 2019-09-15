@@ -26,7 +26,7 @@ void testMonteCarlo() {
     MC.nbSamples_ = 3;
     MC.rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
     pnl_rng_sseed(MC.rng_, 1234);
-
+    // Faut il changer la seed à chaque fois
 
     double prix;
     double ic;
