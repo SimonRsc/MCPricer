@@ -53,5 +53,5 @@ else()
     message(STATUS "C++ Flags: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_LINKER_EXE_FLAGS}" )
 endif()
 
-add_subdirectory(tests)
 add_subdirectory(src)
+add_subdirectory(tests)

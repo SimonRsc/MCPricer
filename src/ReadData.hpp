@@ -2,6 +2,7 @@
 #define MC_PRICER_READDATA_HPP
 
 
+#include <cstring>
 #include "Option.hpp"
 #include "BlackScholesModel.hpp"
 
@@ -23,11 +24,11 @@ public:
 enum OPTION_TYPE {ASIAN, BASKET, PERF, BAD_OPTION};
 
 OPTION_TYPE str2option(char const *str) {
-    if (str == "asian") {
+    if (strcmp(str, "asian") == 0) {
         return ASIAN;
-    } else if (str == "basket") {
+    } else if (strcmp(str, "basket") == 0) {
         return BASKET;
-    } else if (str == "performance") {
+    } else if (strcmp(str, "performance") == 0) {
         return PERF;
     } else {
         return BAD_OPTION;

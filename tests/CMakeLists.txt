@@ -35,7 +35,6 @@ add_executable(sample gtest-sample.cpp)
 target_link_libraries(sample gtest)
 add_test (NAME sample COMMAND sample)
 
-
 add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
 target_link_libraries(PayoffTest ${PNL_LIBRARIES})
