@@ -23,4 +23,5 @@ double CallOption::payoff(const PnlMat *path) {
 
 CallOption::CallOption(double k,double t, int nbTimeSteps_, int size): Option(t,nbTimeSteps_,size) {
    this->K_ = k;
+
 }
