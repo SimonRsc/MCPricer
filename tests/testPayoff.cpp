@@ -8,6 +8,7 @@
 #include "gtest/gtest.h"
 #include "../cmake-build-debug/tests/googletest-src/googletest/include/gtest/gtest.h"
 #include "../src/AsianOption.h"
+#include "../src/PerformanceOption.h"
 #include <sstream>
 
 using namespace std;
@@ -48,13 +49,22 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
+//Test basketOption
 TEST_F(PayoffTests, BasketTests) {
-
 
 BasketOption basketOption(lambda,5,6,6,3);
 double resultPayoff = basketOption.payoff(matrix);
 pnl_mat_free(&matrix);
 EXPECT_FLOAT_EQ(resultPayoff,0.4015);
+}
+
+//Test a call with a basketOption
+TEST_F(PayoffTests, CallWithBasket){
+    double lambda = 1;
+    BasketOption basketOption(&lambda,5,6,6,1);
+    PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
+    double result = basketOption.payoff(matrix);
+    EXPECT_FLOAT_EQ(result,7.5);
 }
 
 TEST_F(PayoffTests, CallTests) {
@@ -75,6 +85,13 @@ TEST_F(PayoffTests, AsianOption){
     AsianOption asianOption(lambda, 3,6,6,3);
     double result = asianOption.payoff(this->matrix);
     EXPECT_NEAR(result,0.90,0.01);
+}
+
+TEST_F(PayoffTests,PerformanceOptionTest){
+    PerformanceOption perfOption(6,6,3);
+    double result = perfOption.payoff(this->matrix);
+    EXPECT_NEAR(result,1.68497,0.0001);
+
 }
 
 int main(int argc, char **argv)
