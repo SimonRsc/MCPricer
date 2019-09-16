@@ -7,8 +7,9 @@
 #include "Option.hpp"
 
 class PerformanceOption : public Option{
-
-    virtual double payoff(PnlMat * path);
+public:
+    PerformanceOption(double T_, int nbTimeSteps, int size);
+    virtual double payoff(const PnlMat * path);
 };
 
 
