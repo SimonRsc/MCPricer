@@ -69,3 +69,16 @@ BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *si
 BlackScholesModel::~BlackScholesModel() {
     pnl_mat_free(&L_);
 }
+
+/*
+void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t,
+                                   double timestep) {
+    double tmpDate = 0;
+    int index = 0;
+    int m = path->m;
+    while (tmpDate < t){
+        MLET(shift_path, index, d) = MGET(path, index, d);
+        tmpDate += timestep;
+        index++;
+    }
+}*/
