@@ -48,7 +48,7 @@ ReadData::ReadData(char *argv) {
     } else if (option_type == "asian") {
         option = new AsianOption(payoff_coeff, strike, T, timestep_number, size);
     } else if (option_type == "performance") {
-        option = new PerformanceOption(T, timestep_number, size);
+        option = new PerformanceOption(payoff_coeff, T, timestep_number, size);
     } else {
         throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
