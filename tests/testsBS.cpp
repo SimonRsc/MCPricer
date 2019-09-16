@@ -30,6 +30,9 @@ TEST_F(BSTest, test_cholesky) {
     PnlMat *result = pnl_mat_mult_mat(L, pnl_mat_transpose(L));
     PnlMat *id = pnl_mat_create_diag(pnl_vect_create_from_scalar(2,1));
     EXPECT_EQ(pnl_mat_isequal(result, id,0.01), 1);
+    pnl_mat_free(&result);
+    pnl_mat_free(&id);
+    delete BS;
 }
 
 TEST_F(BSTest, test_bsNext) {
@@ -42,6 +45,24 @@ TEST_F(BSTest, test_bsNext) {
     pnl_rng_free(&rng);
     pnl_vect_free(&vol);
     pnl_vect_free(&spot);
+    delete BS;
+}
+
+TEST_F(BSTest, test_bs1Dim) {
+    PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);
+    PnlVect *spot = pnl_vect_create_from_scalar(1,10);
+    auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot);
+    PnlRng *rng = pnl_rng_create(PNL_RNG_KNUTH);
+    pnl_rng_sseed(rng, 1);
+    PnlMat *path = pnl_mat_create(11, 1);
+    BS->asset(path, 10, 10, rng);
+    for (int i = 0; i < 11; ++i) {
+        cout << MGET(path, i, 0) << "\n";
+    }
+    pnl_rng_free(&rng);
+    pnl_vect_free(&vol);
+    pnl_vect_free(&spot);
+    pnl_mat_free(&path);
     delete BS;
 }
 
