@@ -55,6 +55,8 @@ public:
      * @param[in] timestep pas de constatation du sous-jacent
      */
   //  void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
+    FakeBlackScholesModel(int size, double r, double rho, PnlVect* sigma, PnlVect* spot);
+
 };
 
 

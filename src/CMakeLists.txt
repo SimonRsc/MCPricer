@@ -5,6 +5,7 @@ set(SRC
     BasketOption.cpp
     AsianOption.cpp
     PerformanceOption.cpp
+    ../tests/fakeSrc/FakeBlackScholesModel.cpp
     )
 
 add_library(MCPricer ${SRC})

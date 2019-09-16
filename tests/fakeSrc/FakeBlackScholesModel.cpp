@@ -15,3 +15,9 @@ void FakeBlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRn
         }
     }
 }
+
+FakeBlackScholesModel::FakeBlackScholesModel(int size, double r, double rho, PnlVect* sigma, PnlVect* spot):
+BlackScholesModel(size, r, rho, sigma, spot)
+{
+
+}
