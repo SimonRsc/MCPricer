@@ -21,3 +21,11 @@ if(payoff >= 0){
     return 1;
 }
 }
+
+PerformanceOption::PerformanceOption(PnlVect *lambdas , double T_, int nbTimeSteps, int size) : Option(T_,nbTimeSteps,size){
+    this->lambdas = lambdas;
+}
+
+PerformanceOption::~PerformanceOption() {
+    pnl_vect_free(&lambdas);
+}

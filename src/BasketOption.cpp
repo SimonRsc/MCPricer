@@ -41,5 +41,10 @@ BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeStep
 
     this->lambdas = lambdas;
     this->K_ = k;
-
 }
+
+BasketOption::~BasketOption() {
+    pnl_vect_free(&lambdas);
+}
+
+
