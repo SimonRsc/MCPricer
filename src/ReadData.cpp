@@ -2,6 +2,8 @@
 #include "3rdparty/jlparser/include/jlparser/parser.hpp"
 #include "BasketOption.h"
 #include "CallOption.h"
+#include "AsianOption.h"
+#include "PerformanceOption.h"
 #include <stdexcept>
 
 using namespace std;
@@ -41,10 +43,14 @@ ReadData::ReadData(char *argv) {
     }
 
     if (option_type == "basket") {
-        //option = new BasketOption(payoff_coeff, strike, T, timestep_number, size);
-        option = new CallOption(strike, T, timestep_number, size);
+        option = new BasketOption(payoff_coeff, strike, T, timestep_number, size);
+        //option = new CallOption(strike, T, timestep_number, size);
+    } else if (option_type == "asian") {
+        option = new AsianOption(payoff_coeff, strike, T, timestep_number, size);
+    } else if (option_type == "performance") {
+        option = new PerformanceOption(T, timestep_number, size);
     } else {
-
+        throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
 }
 
