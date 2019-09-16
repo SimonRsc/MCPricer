@@ -14,8 +14,9 @@ void testMonteCarlo() {
 
     //Création d'un modele BS
     //BlackScholesModel *mod = new BlackScholesModel(1, 0.02, 0, pnl_vect_create_from_scalar(1, 0.25), pnl_vect_create_from_scalar(1, 10));
-
-    BlackScholesModel *mod = new FakeBlackScholesModel(1, 0.01, 0,pnl_vect_create_from_scalar(1, 0.25), pnl_vect_create_from_scalar(1, 10));
+    auto lambda = pnl_vect_create_from_scalar(1, 0.25);
+    auto spots = pnl_vect_create_from_scalar(1, 10);
+    BlackScholesModel *mod = new FakeBlackScholesModel(1, 0.01, 0,lambda, spots);
 
     //Creation de Monte Carlo
 
@@ -36,7 +37,8 @@ void testMonteCarlo() {
     cout << prix <<endl;
     cout << ic << endl;
 
-
+delete mod;
+delete opt;
 
 }
 int main(){
