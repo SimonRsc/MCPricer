@@ -8,7 +8,8 @@
 
 class PerformanceOption : public Option{
 public:
-    PerformanceOption(PnlVect *lambdas , double T_, int nbTimeSteps, int size) : Option(T_,nbTimeSteps,size){}
+    PerformanceOption(PnlVect *lambdas , double T_, int nbTimeSteps, int size);
+    ~PerformanceOption();
     virtual double payoff(const PnlMat * path);
     PnlVect *lambdas;
 };

@@ -21,6 +21,9 @@ AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps,
     this->K_ = k;
 }
 
+AsianOption::~AsianOption() {
+    pnl_vect_free(&lambdas);
+}
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;

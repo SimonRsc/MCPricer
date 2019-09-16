@@ -10,6 +10,7 @@ class AsianOption : public Option {
 
 public :
      AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_);
+    ~AsianOption();
 
     virtual double payoff(const PnlMat *path);
     PnlVect* lambdas;

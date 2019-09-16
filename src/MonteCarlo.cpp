@@ -6,6 +6,10 @@
 
 using namespace std;
 
+MonteCarlo::~MonteCarlo() {
+    pnl_rng_free(&rng_);
+}
+
 void MonteCarlo::price(double &prix, double &ic){
 
     //Initialisation des variables necessaires

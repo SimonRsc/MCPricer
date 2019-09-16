@@ -69,6 +69,8 @@ BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *si
 
 BlackScholesModel::~BlackScholesModel() {
     pnl_mat_free(&L_);
+    pnl_vect_free(&this->spot_);
+    pnl_vect_free(&this->sigma_);
 }
 
 /*

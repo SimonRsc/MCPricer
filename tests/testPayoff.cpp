@@ -17,9 +17,9 @@ class PayoffTests : public ::testing::Test {
 
 protected:
     PnlMat* matrix;
-    PnlVect *lambda = pnl_vect_create(3);
-
+PnlVect *lambda;
     virtual void SetUp() {
+        lambda = pnl_vect_create(3);
         LET(lambda,0) = 0.2;
         LET(lambda,1) = 0.35;
         LET(lambda,2) = 0.45;
@@ -48,8 +48,8 @@ protected:
     }
 
     virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
+       pnl_mat_free(&matrix);
+
     }
     // Objects declared here can be used by all tests in the test case for Foo.
 };
@@ -65,10 +65,11 @@ EXPECT_FLOAT_EQ(resultPayoff,0.4015);
 
 //Test a call with a basketOption
 TEST_F(PayoffTests, CallWithBasket){
-PnlVect * lambda = pnl_vect_create_from_scalar(1,1);
-BasketOption basketOption(lambda,5,5,5,1);
+    lambda = pnl_vect_create_from_scalar(1,1);
+    BasketOption basketOption(lambda,5,5,5,1);
     PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
     double result = basketOption.payoff(matrix);
+    pnl_mat_free(&matrix);
     EXPECT_FLOAT_EQ(result,7.5);
 }
 
@@ -80,6 +81,7 @@ TEST_F(PayoffTests, CallTests) {
     CallOption optionBis(19,9,9,1);
     double res2 = optionBis.payoff(matrix);
     pnl_mat_free(&matrix);
+    pnl_vect_free(&lambda);
 
     EXPECT_EQ(res1,2.5);
     EXPECT_EQ(res2,0);
