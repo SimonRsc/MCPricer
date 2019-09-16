@@ -17,8 +17,13 @@ class PayoffTests : public ::testing::Test {
 
 protected:
     PnlMat* matrix;
-    double lambda[3] = {0.2, 0.35, 0.45};
+    PnlVect *lambda = pnl_vect_create(3);
+
     virtual void SetUp() {
+        LET(lambda,0) = 0.2;
+        LET(lambda,1) = 0.35;
+        LET(lambda,2) = 0.45;
+
         matrix = pnl_mat_create(10,4);
         MLET(matrix,0,0) = 3.25;
         MLET(matrix,1,0) = 4.75;
@@ -52,7 +57,7 @@ protected:
 //Test basketOption
 TEST_F(PayoffTests, BasketTests) {
 
-BasketOption basketOption(lambda,5,6,6,3);
+BasketOption basketOption(lambda,5,5,5,3);
 double resultPayoff = basketOption.payoff(matrix);
 pnl_mat_free(&matrix);
 EXPECT_FLOAT_EQ(resultPayoff,0.4015);
@@ -60,8 +65,8 @@ EXPECT_FLOAT_EQ(resultPayoff,0.4015);
 
 //Test a call with a basketOption
 TEST_F(PayoffTests, CallWithBasket){
-    double lambda = 1;
-    BasketOption basketOption(&lambda,5,6,6,1);
+PnlVect * lambda = pnl_vect_create_from_scalar(1,1);
+BasketOption basketOption(lambda,5,5,5,1);
     PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
     double result = basketOption.payoff(matrix);
     EXPECT_FLOAT_EQ(result,7.5);
@@ -69,10 +74,10 @@ TEST_F(PayoffTests, CallWithBasket){
 
 TEST_F(PayoffTests, CallTests) {
     PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
-    CallOption option(10,10,1,1);
+    CallOption option(10,9,9,1);
     double res1 = option.payoff(matrix);
 
-    CallOption optionBis(19,10,1,1);
+    CallOption optionBis(19,9,9,1);
     double res2 = optionBis.payoff(matrix);
     pnl_mat_free(&matrix);
 
@@ -82,13 +87,13 @@ TEST_F(PayoffTests, CallTests) {
 }
 
 TEST_F(PayoffTests, AsianOption){
-    AsianOption asianOption(lambda, 3,6,6,3);
+    AsianOption asianOption(lambda, 3,5,5,3);
     double result = asianOption.payoff(this->matrix);
     EXPECT_NEAR(result,0.90,0.01);
 }
 
 TEST_F(PayoffTests,PerformanceOptionTest){
-    PerformanceOption perfOption(6,6,3);
+    PerformanceOption perfOption(lambda, 5,5,3);
     double result = perfOption.payoff(this->matrix);
     EXPECT_NEAR(result,1.68497,0.0001);
 

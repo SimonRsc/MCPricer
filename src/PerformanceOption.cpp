@@ -7,11 +7,11 @@
 
 double PerformanceOption::payoff(const PnlMat *path) {
     double payoff = 0;
-for(int i = 1 ; i < this->nbTimeSteps_ ; ++i){
+for(int i = 1 ; i <= this->nbTimeSteps_ ; ++i){
     double sum_inf = 0 , sum = 0;
     for(int assetNum = 0; assetNum < this->size_ ; ++ assetNum){
-        sum_inf += MGET(path,i-1,assetNum);
-        sum += MGET(path,i,assetNum);
+        sum_inf += GET(lambdas,assetNum) * MGET(path,i-1,assetNum);
+        sum +=GET(lambdas,assetNum)* MGET(path,i,assetNum);
     }
     payoff += (double) sum / sum_inf - 1;
 }
@@ -20,10 +20,4 @@ if(payoff >= 0){
 }else{
     return 1;
 }
-}
-
-PerformanceOption::PerformanceOption(double T_, int nbTimeSteps, int size) {
-    this-> T_ = T_;
-    this->nbTimeSteps_ = nbTimeSteps;
-    this->size_ = size;
 }
