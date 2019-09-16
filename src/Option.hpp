@@ -3,7 +3,7 @@
 #include <assert.h>
 #include "pnl/pnl_vector.h"
 #include "pnl/pnl_matrix.h"
-
+#include <iostream>
 /// \brief Classe Option abstraite
 class Option
 {
@@ -19,6 +19,7 @@ public:
         this->size_ = size;
     }
 
+     virtual  ~Option(){}
     /**
      * Calcule la valeur du payoff sur la trajectoire
      *

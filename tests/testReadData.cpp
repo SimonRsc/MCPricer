@@ -27,6 +27,8 @@ TEST_F(ReadDataTest, ReadCall) {
     MLET(path, 0, 0) = 100;
     MLET(path, 1, 0) = 101;
     EXPECT_EQ(option->payoff(path), 1);
+    delete rd;
+    pnl_mat_free(&path);
 }
 
 int main(int argc, char **argv)
