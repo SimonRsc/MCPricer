@@ -30,6 +30,8 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
+configure_file(../data/call.dat call.dat)
+
 # Link against gtest or gtest_main as needed. Eg
 add_executable(sample gtest-sample.cpp)
 target_link_libraries(sample gtest)
@@ -52,3 +54,8 @@ add_executable(testMonteCarlo testMonteCarlo.cpp )
 target_link_libraries(testMonteCarlo MCPricer)
 target_link_libraries(testMonteCarlo gtest)
 target_link_libraries(testMonteCarlo ${PNL_LIBRARIES})
+
+add_executable(testReadData testReadData.cpp)
+target_link_libraries(testReadData MCPricer)
+target_link_libraries(testReadData gtest)
+target_link_libraries(testReadData ${PNL_LIBRARIES})
