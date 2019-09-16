@@ -24,9 +24,9 @@ TEST_F(ReadDataTest, ReadCall) {
     char arg[] = "call.dat";
     auto rd = new ReadData(arg);
     Option* option = rd->getOption();
-    auto path = new PnlMat();
-    MLET(path, 0, 0) = 10;
-    MLET(path, 1, 0) = 11;
+    auto path = pnl_mat_create(2, 1);
+    MLET(path, 0, 0) = 100;
+    MLET(path, 1, 0) = 101;
     EXPECT_EQ(option->payoff(path), 1);
 }
 
