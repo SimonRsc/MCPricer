@@ -6,6 +6,10 @@ set(SRC
     AsianOption.cpp
     PerformanceOption.cpp
     ../tests/fakeSrc/FakeBlackScholesModel.cpp
+    ReadData.cpp
     )
 
 add_library(MCPricer ${SRC})
+
+target_link_libraries(MCPricer jl_parser)
+target_link_libraries(MCPricer mpark_variant)

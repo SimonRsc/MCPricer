@@ -19,7 +19,6 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
 endif ()
 
-
 # Detect PNL
 find_package(Pnl REQUIRED)
 set(LIBS ${LIBS} ${PNL_LIBRARIES})

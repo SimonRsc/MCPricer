@@ -11,7 +11,7 @@ double CallOption::payoff(const PnlMat *path) {
     //Un seul sous-jacent pour un Call
     assert(this->size_==1);
 
-    double payoff = MGET(path,this->T_-1 ,0) ;
+    double payoff = MGET(path,this->T_,0) ;
 //    cout << payoff << endl;
     payoff -=  this->K_;
     if(payoff>=0){
@@ -24,4 +24,5 @@ double CallOption::payoff(const PnlMat *path) {
 
 CallOption::CallOption(double k,double t, int nbTimeSteps_, int size): Option(t,nbTimeSteps_,size) {
    this->K_ = k;
+
 }
