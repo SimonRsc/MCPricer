@@ -7,12 +7,12 @@
 #include <assert.h>
 using namespace std;
 
-AsianOption::AsianOption(double *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_){
+AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_){
 
     //Vérification des lambdas
     double sum = 0;
     for(int i = 0 ; i < size_ ; ++i){
-        sum += lambdas[i];
+        sum += GET(lambdas,i);
     }
     assert(sum == 1);
     assert(k >= 0);
@@ -24,13 +24,13 @@ AsianOption::AsianOption(double *lambdas, double k, double T_, int nbTimeSteps, 
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
-    double steps =(double) 1 / (this->nbTimeSteps_ + 1);
+    double steps =(double) 1 / (this->nbTimeSteps_ + 2);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
         double sum = 0;
-        for(int i = 0 ; i < nbTimeSteps_; ++i){
+        for(int i = 0 ; i <= nbTimeSteps_; ++i){
             sum += MGET(path,i,assetNum);
         }
-        payoff += lambdas[assetNum] * steps* sum;
+        payoff += GET(lambdas,assetNum) * steps* sum;
     }
     payoff -= K_;
     if(payoff >= 0){

@@ -16,7 +16,7 @@
         isSell = true;
     }
     for (int assetNumber = 0; assetNumber < this->size_; ++assetNumber) {
-         payoff += lambdas[assetNumber] * MGET(path, this->T_-1, assetNumber);
+         payoff += GET(lambdas,assetNumber) * MGET(path, this->T_, assetNumber);
      }
     payoff -= strike;
     if(payoff >= 0){
@@ -30,12 +30,12 @@
     }
 }
 
-BasketOption::BasketOption(double *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_) {
+BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_) {
 
     //Vérification des lambdas
     double sum = 0;
     for(int i = 0 ; i < size_ ; ++i){
-        sum += lambdas[i];
+        sum += GET(lambdas,i);
     }
     assert(sum == 1);
 
