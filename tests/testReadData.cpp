@@ -18,9 +18,6 @@ protected:
 };
 
 TEST_F(ReadDataTest, ReadCall) {
-    /*string str = "data/call.dat";
-    char arg[str.length()];
-    strcpy(arg, str.c_str());*/
     char arg[] = "call.dat";
     auto rd = new ReadData(arg);
     Option* option = rd->getOption();
