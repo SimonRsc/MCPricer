@@ -1,21 +1,21 @@
-#pragma once
+//
+// Created by cecile on 13/09/19.
+//
+
+#ifndef MC_PRICER_FAKEBLACKSCHOLESMODEL_H
+#define MC_PRICER_FAKEBLACKSCHOLESMODEL_H
 
 #include "pnl/pnl_random.h"
-#include "pnl/pnl_vector.h"
-#include "pnl/pnl_matrix.h"
-#include <stdexcept>
-#include <math.h>
+#include "../../src/BlackScholesModel.hpp"
 
-/// \brief Modèle de Black Scholes
-class BlackScholesModel
-{
+
+class FakeBlackScholesModel : public BlackScholesModel{
 public:
     int size_; /// nombre d'actifs du modèle
     double r_; /// taux d'intérêt
     double rho_; /// paramètre de corrélation
     PnlVect *sigma_; /// vecteur de volatilités
     PnlVect *spot_; /// valeurs initiales des sous-jacents
-    PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
 
     /**
      * Génère une trajectoire du modèle et la stocke dans path
@@ -25,7 +25,7 @@ public:
      * @param[in] T  maturité
      * @param[in] nbTimeSteps nombre de dates de constatation
      */
-    void asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng);
+    virtual void asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng);
 
     /**
      * Calcule une trajectoire du modèle connaissant le
@@ -39,7 +39,7 @@ public:
      * @param[in] T date jusqu'à laquelle on simule la trajectoire
      * @param[in] past trajectoire réalisée jusqu'a la date t
      */
-    void asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past);
+//    void asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past);
 
     /**
      * Shift d'une trajectoire du sous-jacent
@@ -54,27 +54,8 @@ public:
      * @param[in] d indice du sous-jacent à shifter
      * @param[in] timestep pas de constatation du sous-jacent
      */
-    void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
-
-    /**
-     * Calcule la factorisée de Cholesky de la matrice Γ à partir du champ rho
-     * @return la factorisée L
-     */
-    PnlMat* CholeskyCorrelationMatrix();
-
-    /**
-     * Calcule la prochaine itération du modèle de Black and Scholes pour un actif donné.
-     * @param Std La précédente valeur de l'actif
-     * @param productIndex l'index de l'actif dans sigma et spot
-     * @param dt (ti+1 - ti)
-     * @param randomGenerator le générateur aléatoire du modèle
-     * @return La prochaine valeur de l'actif dans le modèle
-     */
-    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator);
-
-    BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
-
-    virtual ~BlackScholesModel();
+  //  void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
 };
 
 
+#endif //MC_PRICER_FAKEBLACKSCHOLESMODEL_H
