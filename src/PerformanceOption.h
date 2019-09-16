@@ -8,7 +8,7 @@
 
 class PerformanceOption : public Option{
 public:
-    PerformanceOption(double T_, int nbTimeSteps, int size);
+    PerformanceOption(double T_, int nbTimeSteps, int size) : Option(T_,nbTimeSteps,size){}
     virtual double payoff(const PnlMat * path);
 };
 

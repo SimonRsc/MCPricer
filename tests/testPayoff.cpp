@@ -69,10 +69,10 @@ TEST_F(PayoffTests, CallWithBasket){
 
 TEST_F(PayoffTests, CallTests) {
     PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
-    CallOption option(10,10,1,1);
+    CallOption option(10,10,10,1);
     double res1 = option.payoff(matrix);
 
-    CallOption optionBis(19,10,1,1);
+    CallOption optionBis(19,10,10,1);
     double res2 = optionBis.payoff(matrix);
     pnl_mat_free(&matrix);
 

@@ -21,9 +21,3 @@ if(payoff >= 0){
     return 1;
 }
 }
-
-PerformanceOption::PerformanceOption(double T_, int nbTimeSteps, int size) {
-    this-> T_ = T_;
-    this->nbTimeSteps_ = nbTimeSteps;
-    this->size_ = size;
-}
