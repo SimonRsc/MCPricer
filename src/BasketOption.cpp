@@ -15,9 +15,11 @@
         strike = -strike;
         isSell = true;
     }
+
     for (int assetNumber = 0; assetNumber < this->size_; ++assetNumber) {
-         payoff += GET(lambdas,assetNumber) * MGET(path, this->T_, assetNumber);
+         payoff += GET(lambdas,assetNumber) * MGET(path, this->nbTimeSteps_, assetNumber);
      }
+
     payoff -= strike;
     if(payoff >= 0){
         if(isSell){
@@ -37,7 +39,7 @@ BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeStep
     for(int i = 0 ; i < size_ ; ++i){
         sum += GET(lambdas,i);
     }
-    assert(sum == 1);
+    assert(sum -1 < 0.001);
 
     this->lambdas = lambdas;
     this->K_ = k;
