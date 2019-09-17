@@ -1,7 +1,8 @@
 #include "gtest/gtest.h"
-#include <sstream>
+#include "../src/ReadData.hpp"
+#include "../src/Option.hpp"
 
-class FooTest : public ::testing::Test {
+class ReadDataTest : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
@@ -13,15 +14,18 @@ protected:
         // Code here will be called immediately after each test (right
         // before the destructor).
     }
-    // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST_F(FooTest, jhvjhbjhbjhb) {
-    EXPECT_EQ(0, 0);
-}
-
-TEST_F(FooTest, WhatDoesThisOtherTest) {
-    EXPECT_NE(0, 1);
+TEST_F(ReadDataTest, ReadCall) {
+    char arg[] = "call.dat";
+    auto rd = new ReadData(arg);
+    Option* option = rd->getOption();
+    auto path = pnl_mat_create(2, 1);
+    MLET(path, 0, 0) = 100;
+    MLET(path, 1, 0) = 101;
+    EXPECT_EQ(option->payoff(path), 1);
+    delete rd;
+    pnl_mat_free(&path);
 }
 
 int main(int argc, char **argv)

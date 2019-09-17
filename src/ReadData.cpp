@@ -1,19 +1,22 @@
 #include "ReadData.hpp"
-#include "jlparser/parser.hpp"
+#include "3rdparty/jlparser/include/jlparser/parser.hpp"
+#include "BasketOption.h"
 #include "CallOption.h"
+#include "AsianOption.h"
+#include "PerformanceOption.h"
 #include <stdexcept>
 
 using namespace std;
 
-ReadData::ReadData(int argc, char **argv) {
+ReadData::ReadData(char *argv) {
     double T, r, strike, correlation;
-    PnlVect *spot, *sigma, *divid;
+    PnlVect *spot, *sigma, *divid, *payoff_coeff;
     string model_type;
-    const char *option_type;
+    string option_type;
     int size, timestep_number;
     size_t n_samples;
 
-    char *infile = argv[1];
+    char *infile = argv;
     Param *P = new Parser(infile);
 
     P->extract("model type", model_type);
@@ -31,6 +34,7 @@ ReadData::ReadData(int argc, char **argv) {
     P->extract("strike", strike);
     P->extract("sample number", n_samples);
     P->extract("timestep number", timestep_number);
+    P->extract("payoff coefficients", payoff_coeff, size);
 
     if (model_type == "bs") {
         model = new BlackScholesModel(size, r, correlation, sigma, spot);
@@ -38,21 +42,18 @@ ReadData::ReadData(int argc, char **argv) {
         // TODO Bad model (maybe we'll use another model during the PEPS)
     }
 
-    switch (str2option(option_type)) {
-        case ASIAN:
-            // option = new AsianOption();
-            break;
-        case BASKET:
-            option = new CallOption(strike, T, timestep_number, size);
-            break;
-        case PERF:
-            // option = new PerformanceOption();
-            break;
-        case BAD_OPTION:
-            // TODO
-            break;
+    if (option_type == "basket") {
+        option = new BasketOption(payoff_coeff, strike, T, timestep_number, size);
+        //option = new CallOption(strike, T, timestep_number, size);
+    } else if (option_type == "asian") {
+        option = new AsianOption(payoff_coeff, strike, T, timestep_number, size);
+    } else if (option_type == "performance") {
+        option = new PerformanceOption(payoff_coeff, T, timestep_number, size);
+    } else {
+        throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
 
+    delete P;
 }
 
 Option* ReadData::getOption() {

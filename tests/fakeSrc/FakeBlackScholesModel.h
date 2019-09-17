@@ -39,7 +39,7 @@ public:
      * @param[in] T date jusqu'à laquelle on simule la trajectoire
      * @param[in] past trajectoire réalisée jusqu'a la date t
      */
-//    void asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past);
+    void asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past);
 
     /**
      * Shift d'une trajectoire du sous-jacent
@@ -55,6 +55,8 @@ public:
      * @param[in] timestep pas de constatation du sous-jacent
      */
   //  void shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t, double timestep);
+    FakeBlackScholesModel(int size, double r, double rho, PnlVect* sigma, PnlVect* spot);
+
 };
 
 

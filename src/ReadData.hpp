@@ -1,9 +1,12 @@
 #ifndef MC_PRICER_READDATA_HPP
 #define MC_PRICER_READDATA_HPP
 
-
+#include <cstring>
+#include <string>
 #include "Option.hpp"
 #include "BlackScholesModel.hpp"
+
+using namespace std;
 
 class ReadData {
 private:
@@ -11,7 +14,7 @@ private:
     BlackScholesModel *model;
 
 public:
-    ReadData(int argc, char **argv);
+    ReadData(char *argv);
 
     ~ReadData();
 
@@ -19,20 +22,6 @@ public:
 
     BlackScholesModel* getModel();
 };
-
-enum OPTION_TYPE {ASIAN, BASKET, PERF, BAD_OPTION};
-
-OPTION_TYPE str2option(char const *str) {
-    if (str == "asian") {
-        return ASIAN;
-    } else if (str == "basket") {
-        return BASKET;
-    } else if (str == "performance") {
-        return PERF;
-    } else {
-        return BAD_OPTION;
-    }
-}
 
 
 #endif //MC_PRICER_READDATA_HPP

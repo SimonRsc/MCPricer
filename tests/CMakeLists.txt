@@ -30,15 +30,17 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
+configure_file(../data/basket_1.dat basket_1.dat)
+
 # Link against gtest or gtest_main as needed. Eg
 add_executable(sample gtest-sample.cpp)
 target_link_libraries(sample gtest)
 add_test (NAME sample COMMAND sample)
 
-
 add_executable(PayoffTest testPayoff.cpp )
 target_link_libraries(PayoffTest MCPricer)
 target_link_libraries(PayoffTest ${PNL_LIBRARIES})
+target_link_libraries(PayoffTest gtest)
 
 add_executable(pnlTests pnlTests.cpp )
 target_link_libraries(pnlTests ${PNL_LIBRARIES})
@@ -52,3 +54,12 @@ add_executable(testMonteCarlo testMonteCarlo.cpp )
 target_link_libraries(testMonteCarlo MCPricer)
 target_link_libraries(testMonteCarlo gtest)
 target_link_libraries(testMonteCarlo ${PNL_LIBRARIES})
+
+add_executable(testReadData testReadData.cpp)
+target_link_libraries(testReadData MCPricer)
+target_link_libraries(testReadData gtest)
+target_link_libraries(testReadData ${PNL_LIBRARIES})
+
+add_executable(MainPricer ../src/MainPricer.cpp)
+target_link_libraries(MainPricer MCPricer)
+target_link_libraries(MainPricer ${PNL_LIBRARIES})
