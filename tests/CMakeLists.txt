@@ -30,7 +30,9 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
+configure_file(../data/call.dat call.dat)
 configure_file(../data/basket_1.dat basket_1.dat)
+configure_file(../data/asian.dat asian.dat)
 
 # Link against gtest or gtest_main as needed. Eg
 add_executable(sample gtest-sample.cpp)
