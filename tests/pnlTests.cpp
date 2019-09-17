@@ -1,6 +1,3 @@
-//
-// Created by lamur on 10/09/2019.
-//
 #include <iostream>
 #include "pnl/pnl_vector.h"
 

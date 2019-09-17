@@ -1,7 +1,3 @@
-//
-// Created by simon on 12/09/19.
-//
-
 #ifndef MC_PRICER_BASKETOPTION_H
 #define MC_PRICER_BASKETOPTION_H
 
