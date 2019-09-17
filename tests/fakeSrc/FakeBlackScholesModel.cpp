@@ -16,7 +16,7 @@ void FakeBlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRn
     }
 }
 
-void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
+void FakeBlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
     double dt = T / nbTimeSteps;
     double tmpDate = 0;
     int index = 0;
