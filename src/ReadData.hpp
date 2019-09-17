@@ -12,6 +12,7 @@ class ReadData {
 private:
     Option *option;
     BlackScholesModel *model;
+    long n_samples;
 
 public:
     ReadData(char *argv);
@@ -21,6 +22,8 @@ public:
     Option* getOption();
 
     BlackScholesModel* getModel();
+
+    long getNombreSample();
 };
 
 
