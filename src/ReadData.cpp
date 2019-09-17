@@ -52,6 +52,8 @@ ReadData::ReadData(char *argv) {
     } else {
         throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
+
+    delete P;
 }
 
 Option* ReadData::getOption() {

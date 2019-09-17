@@ -17,9 +17,6 @@ protected:
 };
 
 TEST_F(ReadDataTest, ReadCall) {
-    /*string str = "data/call.dat";
-    char arg[str.length()];
-    strcpy(arg, str.c_str());*/
     char arg[] = "call.dat";
     auto rd = new ReadData(arg);
     Option* option = rd->getOption();
@@ -27,6 +24,8 @@ TEST_F(ReadDataTest, ReadCall) {
     MLET(path, 0, 0) = 100;
     MLET(path, 1, 0) = 101;
     EXPECT_EQ(option->payoff(path), 1);
+    delete rd;
+    pnl_mat_free(&path);
 }
 
 int main(int argc, char **argv)
