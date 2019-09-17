@@ -42,8 +42,6 @@ TEST_F(BSTest, test_bsNext) {
     pnl_rng_sseed(rng, 0);
     EXPECT_NEAR(0.934, BS->next(1, 0, 1, rng), 0.01);
     pnl_rng_free(&rng);
-    pnl_vect_free(&vol);
-    pnl_vect_free(&spot);
     delete BS;
 }
 
@@ -59,8 +57,6 @@ TEST_F(BSTest, test_bs1Dim) {
         cout << MGET(path, i, 0) << "\n";
     }
     pnl_rng_free(&rng);
-    pnl_vect_free(&vol);
-    pnl_vect_free(&spot);
     pnl_mat_free(&path);
     delete BS;
 }
