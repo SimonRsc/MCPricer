@@ -71,13 +71,13 @@ public:
      * @param randomGenerator le générateur aléatoire du modèle
      * @return La prochaine valeur de l'actif dans le modèle
      */
-    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator);
+    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator, double r);
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
 
     virtual ~BlackScholesModel();
 
-    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index);
+    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index, double r);
 
     void simul_market(int H);
 };
