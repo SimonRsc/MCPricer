@@ -81,8 +81,6 @@ TEST_F(BSTest, test_bsAsset2_1Dim) {
     pnl_mat_print(path);
 
     pnl_rng_free(&rng);
-    pnl_vect_free(&vol);
-    pnl_vect_free(&spot);
     pnl_mat_free(&path);
     delete BS;
 }
