@@ -1,6 +1,3 @@
-//
-// Created by lamur on 11/09/2019.
-//
 #include <iostream>
 #include "BlackScholesModel.hpp"
 
@@ -75,6 +72,6 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
     pnl_mat_clone(shift_path, path);
 
     for (int i = index; i < m; ++i) {
-        MLET(shift_path, index, d) = MGET(path, index, d)*(1+h);
+        MLET(shift_path, i, d) = MGET(path, i, d)*(1+h);
     }
 }

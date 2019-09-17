@@ -1,7 +1,3 @@
-//
-// Created by simon on 13/09/19.
-//
-
 #include <iostream>
 #include "PerformanceOption.h"
 

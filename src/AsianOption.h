@@ -1,7 +1,3 @@
-//
-// Created by simon on 13/09/19.
-//
-
 #ifndef MC_PRICER_ASIANOPTION_H
 #define MC_PRICER_ASIANOPTION_H
 #include "Option.hpp"
