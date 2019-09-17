@@ -1,6 +1,3 @@
-//
-// Created by cecile on 13/09/19.
-//
 #include <iostream>
 #include "fakeSrc/FakeBlackScholesModel.h"
 #include "../src/CallOption.h"
