@@ -75,6 +75,8 @@ public:
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
 
     virtual ~BlackScholesModel();
+
+    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index);
 };
 
 
