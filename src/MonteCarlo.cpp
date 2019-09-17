@@ -98,21 +98,27 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic
     double dt = T / N;
     double h = 0.01;
 
+    PnlMat *path = pnl_mat_create(N+1, D);
     PnlMat *shift_path = pnl_mat_create(N+1, D);
 
     for (int d = 0; d < D ; d++) {
         sum = 0;
         sumSquare = 0;
         for (int j = 0; j < M; j++) {
-            mod_->shiftAsset(shift_path, past, d, h, t, dt);
+            if (past->m > 1) {
+                mod_->asset(path, t, T, N, this->rng_, past);
+            } else {
+                mod_->asset(path, T, N, this->rng_);
+            }
+            mod_->shiftAsset(shift_path, path, d, h, t, dt);
             phi_plus = this->opt_->payoff(shift_path);
             sum += phi_plus;
-            mod_->shiftAsset(shift_path, past, d, -h, t, dt);
+            mod_->shiftAsset(shift_path, path, d, -h, t, dt);
             phi_minus = this->opt_->payoff(shift_path);
             sum -= phi_minus;
             sumSquare += pow(phi_plus - phi_minus, 2);
         }
-        st = MGET(past, past->n -1, d);
+        st = MGET(past, past->m -1, d);
         LET(delta, d) = sum * exp(r * (T - t)) /
                 (M * 2 * st * h);
         estim = exp(-2 * r * (T - t)) *
