@@ -1,0 +1,43 @@
+#include "gtest/gtest.h"
+#include <sstream>
+#include "../src/MonteCarlo.hpp"
+#include "../src/ReadData.hpp"
+
+class TestDelta : public ::testing::Test {
+
+protected:
+    virtual void SetUp() {
+        // Code here will be called immediately after the constructor (right
+        // before each test).
+    }
+
+    virtual void TearDown() {
+        // Code here will be called immediately after each test (right
+        // before the destructor).
+    }
+    // Objects declared here can be used by all tests in the test case for Foo.
+};
+
+TEST_F(TestDelta, jhvjhbjhbjhb) {
+    char arg[] = "asian.dat";
+    auto rd = new ReadData(arg);
+    auto mc = new MonteCarlo();
+    mc->mod_ = rd->getModel();
+    mc->opt_ = rd->getOption();
+    mc->nbSamples_ = 50000;
+    mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    pnl_rng_sseed(mc->rng_, time(0));
+    auto deltas = pnl_vect_create(2);
+    auto ic = pnl_vect_create(2);
+    mc->delta()
+}
+
+TEST_F(TestDelta, WhatDoesThisOtherTest) {
+    EXPECT_NE(0, 1);
+}
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
