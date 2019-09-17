@@ -27,7 +27,7 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
-    double steps =(double) 1 / (this->nbTimeSteps_ + 2);
+    double steps =(double) 1 / (this->nbTimeSteps_ + 1);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
         double sum = 0;
         for(int i = 0 ; i <= nbTimeSteps_; ++i){

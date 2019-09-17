@@ -27,11 +27,15 @@ ReadData::ReadData(char *argv) {
     P->extract("volatility", sigma, size);
     P->extract("interest rate", r);
     P->extract("correlation", correlation);
+
 //    if (P->extract("dividend rate", divid, size, true) == false)
 //    {
 //        divid = pnl_vect_create_from_zero(size);
 //    }
-    P->extract("strike", strike);
+
+    if(option_type != "performance"){
+        P->extract("strike", strike);
+    }
     P->extract("sample number", n_samples);
     P->extract("timestep number", timestep_number);
     P->extract("payoff coefficients", payoff_coeff, size);
@@ -53,6 +57,8 @@ ReadData::ReadData(char *argv) {
         throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
 
+    this->n_samples = n_samples;
+
     delete P;
 }
 
@@ -64,6 +70,9 @@ BlackScholesModel* ReadData::getModel() {
     return model;
 }
 
+long ReadData::getNombreSample(){
+    return n_samples;
+}
 ReadData::~ReadData() {
     delete model;
     delete option;

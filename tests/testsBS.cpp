@@ -40,7 +40,7 @@ TEST_F(BSTest, test_bsNext) {
     auto *BS = new BlackScholesModel(2, 0.02, 0, vol, spot);
     PnlRng *rng = pnl_rng_create(PNL_RNG_KNUTH);
     pnl_rng_sseed(rng, 0);
-    EXPECT_NEAR(0.934, BS->next(1, 0, 1, rng), 0.01);
+    EXPECT_NEAR(0.934, BS->next(1, 0, 1, rng, 0.02), 0.01);
     pnl_rng_free(&rng);
     delete BS;
 }
@@ -80,6 +80,25 @@ TEST_F(BSTest, test_bsAsset2_1Dim) {
     pnl_mat_free(&path);
     delete BS;
 }
+
+TEST_F(BSTest, test_bsShift) {
+    PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);
+    PnlVect *spot = pnl_vect_create_from_scalar(1,10);
+    auto *BS = new BlackScholesModel(5, 0.02, 0, vol, spot);
+    PnlMat *shift = pnl_mat_create(10, 5);
+    PnlMat *path = pnl_mat_create_from_scalar(10, 5, 10);
+    BS->shiftAsset(shift, path, 2, 1, 5, 1);
+
+    std::cout << "\n" << "-------------" << "\n";
+    pnl_mat_print(path);
+    std::cout << "---------------" << "\n";
+    pnl_mat_print(shift);
+
+
+    pnl_mat_free(&path);
+    delete BS;
+}
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
