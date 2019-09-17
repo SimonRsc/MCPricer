@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <assert.h>
 #include <gtest/gtest.h>
 #include "../src/BlackScholesModel.hpp"
 

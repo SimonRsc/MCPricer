@@ -5,37 +5,28 @@
 
 void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng) {
     double dt = T/nbTimeSteps;
-    for (int c = 0; c < size_; ++c) {
-        MLET(path, 0, c) = GET(spot_, c);
-    }
-    for (int i = 1; i < nbTimeSteps+1; ++i) {
-        for (int j = 0; j < size_; ++j) {
-            MLET(path, i, j) = next(MGET(path, i-1, j), j, dt, rng);;
-        }
-    }
+    pnl_mat_set_row(path, spot_, 0);
+    completePath(path, nbTimeSteps, rng, dt, 1);
 }
 
 void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
     double dt = T/nbTimeSteps;
-    double tmpDate = 0;
-    int index = 0;
-    while (tmpDate < t){
-        for (int c = 0; c < size_; ++c) {
-            MLET(path, index, c) = MGET(past, index, c);
-        }
-        tmpDate += dt;
-        index++;
-    }
+    int index = past->m-1;
+    PnlMat sub = pnl_mat_wrap_mat_rows(past, 0, index);
+    pnl_mat_set_subblock(path, &sub, 0, 0);
+    index++;
     for (int c = 0; c < size_; ++c) {
-        MLET(path, index, c) = next(MGET(past, index, c), c, tmpDate-t,rng);
+        MLET(path, index, c) = next(MGET(past, index, c), c, index*dt-t,rng);
     }
-    index ++;
-    for (int i = index; i < nbTimeSteps+1; ++i) {
+    completePath(path, nbTimeSteps, rng, dt, index+1);
+}
+
+void BlackScholesModel::completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index) {
+    for (int i = index; i < nbTimeSteps + 1; ++i) {
         for (int j = 0; j < size_; ++j) {
-            MLET(path, i, j) = next(MGET(path, i-1, j), j, dt, rng);;
+            MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, rng);;
         }
     }
-
 }
 
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
@@ -70,15 +61,14 @@ BlackScholesModel::~BlackScholesModel() {
     pnl_mat_free(&L_);
 }
 
-/*
 void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t,
                                    double timestep) {
-    double tmpDate = 0;
-    int index = 0;
+    int index = ceil(t/timestep);
     int m = path->m;
-    while (tmpDate < t){
-        MLET(shift_path, index, d) = MGET(path, index, d);
-        tmpDate += timestep;
-        index++;
+
+    pnl_mat_clone(shift_path, path);
+
+    for (int i = index; i < m; ++i) {
+        MLET(shift_path, index, d) = MGET(path, index, d)*(1+h);
     }
-}*/
+}
