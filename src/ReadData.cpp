@@ -32,7 +32,10 @@ ReadData::ReadData(char *argv) {
 //    {
 //        divid = pnl_vect_create_from_zero(size);
 //    }
-    P->extract("strike", strike);
+
+    if(option_type != "performance"){
+        P->extract("strike", strike);
+    }
     P->extract("sample number", n_samples);
     P->extract("timestep number", timestep_number);
     P->extract("payoff coefficients", payoff_coeff, size);
