@@ -18,7 +18,7 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST_F(TestDelta, jhvjhbjhbjhb) {
+TEST_F(TestDelta, Asian) {
     char arg[] = "asian.dat";
     auto rd = new ReadData(arg);
     auto mc = new MonteCarlo();
@@ -29,11 +29,12 @@ TEST_F(TestDelta, jhvjhbjhbjhb) {
     pnl_rng_sseed(mc->rng_, time(0));
     auto deltas = pnl_vect_create(2);
     auto ic = pnl_vect_create(2);
-    mc->delta()
-}
-
-TEST_F(TestDelta, WhatDoesThisOtherTest) {
-    EXPECT_NE(0, 1);
+    auto past = pnl_mat_create(1, 2);
+    MLET(past, 0, 0) = 100;
+    MLET(past, 0, 1) = 100;
+    mc->delta(past, 0., deltas, ic);
+    EXPECT_NEAR(GET(deltas, 0), 0.281640, GET(ic, 0));
+    EXPECT_NEAR(GET(deltas, 1), 0.281951, GET(ic, 1));
 }
 
 int main(int argc, char **argv)
