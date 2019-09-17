@@ -13,6 +13,7 @@ public:
     int size_; /// nombre d'actifs du modèle
     double r_; /// taux d'intérêt
     double rho_; /// paramètre de corrélation
+    PnlVect *trend_; /// tendance du modèle
     PnlVect *sigma_; /// vecteur de volatilités
     PnlVect *spot_; /// valeurs initiales des sous-jacents
     PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
@@ -77,6 +78,8 @@ public:
     virtual ~BlackScholesModel();
 
     void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index);
+
+    void simul_market(int H);
 };
 
 

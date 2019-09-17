@@ -78,3 +78,7 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
         MLET(shift_path, i, d) = MGET(path, i, d)*(1+h);
     }
 }
+
+void BlackScholesModel::simul_market(int H){
+
+}
