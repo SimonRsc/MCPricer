@@ -97,9 +97,8 @@ TEST_F(MonteCarloTests, PricePast){
     MLET(past, 0, 0) = 2;
     MLET(past, 1, 0) = 2.5;
 
-    MC.price(past, 1, prix, ic);
-
-    EXPECT_FLOAT_EQ(prix, 0.579572);
+    MC.price(past, 2, prix, ic);
+    EXPECT_FLOAT_EQ(prix, 0.58539701);
 }
 
 int main(int argc, char **argv)
