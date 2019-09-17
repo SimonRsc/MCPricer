@@ -4,7 +4,7 @@
 
 #include "ProfitLoss.h"
 
-static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double *pL){
+static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL){
     Option *opt = monteCarlo->opt_;
 
     double V = 0;
@@ -46,9 +46,9 @@ static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double 
         //FIN BOUCLE
 
         pnl_vect_clone(deltaMoins, deltaTmp);
-
     }
+    double payoff = opt->payoff(path);
 
-
+    pL = V + pnl_vect_scalar_prod(deltaMoins, S) - payoff;
 
 }
