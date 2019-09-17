@@ -1,6 +1,7 @@
 //
 // Created by lamur on 11/09/2019.
 //
+#include <iostream>
 #include "BlackScholesModel.hpp"
 
 void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng) {
@@ -11,13 +12,16 @@ void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *r
 
 void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
     double dt = T/nbTimeSteps;
-    int index = past->m-1;
+    int index = past->m-2;
+
     PnlMat sub = pnl_mat_wrap_mat_rows(past, 0, index);
     pnl_mat_set_subblock(path, &sub, 0, 0);
+
     index++;
     for (int c = 0; c < size_; ++c) {
-        MLET(path, index, c) = next(MGET(past, index, c), c, index*dt-t,rng);
+        MLET(path, index, c) = next(MGET(past, index, c), c, (index+1)*dt-t,rng);
     }
+
     completePath(path, nbTimeSteps, rng, dt, index+1);
 }
 
