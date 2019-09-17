@@ -13,13 +13,14 @@ public:
     int size_; /// dimension du modèle, redondant avec BlackScholesModel::size_
 
     Option(double T, int nbTimeSteps, int size){
-        assert(T <= nbTimeSteps);
+        //assert(T <= nbTimeSteps);
         this->T_ = T;
         this->nbTimeSteps_ =  nbTimeSteps;
         this->size_ = size;
     }
 
-     virtual  ~Option(){}
+     virtual ~Option() = default;
+
     /**
      * Calcule la valeur du payoff sur la trajectoire
      *
