@@ -1,6 +1,3 @@
-//
-// Created by simon on 12/09/19.
-//
 #include <iostream>
 #include <assert.h>
 #include "../src/CallOption.h"

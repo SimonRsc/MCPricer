@@ -1,7 +1,3 @@
-//
-// Created by cecile on 13/09/19.
-//
-
 #ifndef MC_PRICER_FAKEBLACKSCHOLESMODEL_H
 #define MC_PRICER_FAKEBLACKSCHOLESMODEL_H
 
