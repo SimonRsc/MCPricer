@@ -1,0 +1,52 @@
+[
+    {
+        "testCaseName": "basket_2",
+        "comparison": {
+            "priceDistance": 1.051568622862706,
+            "stdDevRatio": 221.68441781222603,
+            "deltaComponentDistance": 257.2125831578243,
+            "deltaStdDevRatios": 0.0,
+            "timeRatio": 1.1535944401152622
+        }
+    },
+    {
+        "testCaseName": "perf",
+        "comparison": {
+            "priceDistance": 1.3734959371650661,
+            "stdDevRatio": 222.3316873991074,
+            "deltaComponentDistance": 1.254128026296741,
+            "deltaStdDevRatios": 0.0,
+            "timeRatio": 1.6710805089909977
+        }
+    },
+    {
+        "testCaseName": "asian",
+        "comparison": {
+            "priceDistance": 0.16755820486647763,
+            "stdDevRatio": 223.30588348720542,
+            "deltaComponentDistance": 265.28423040604343,
+            "deltaStdDevRatios": 0.0,
+            "timeRatio": 1.7753512738724917
+        }
+    },
+    {
+        "testCaseName": "basket",
+        "comparison": {
+            "priceDistance": 0.4558589770524493,
+            "stdDevRatio": 222.99550879807828,
+            "deltaComponentDistance": 620.182730472553,
+            "deltaStdDevRatios": 0.0,
+            "timeRatio": 1.078491646037461
+        }
+    },
+    {
+        "testCaseName": "basket_1",
+        "comparison": {
+            "priceDistance": 2.620198120275438,
+            "stdDevRatio": 224.17558894997842,
+            "deltaComponentDistance": 620.182730472553,
+            "deltaStdDevRatios": 0.0,
+            "timeRatio": 1.1072360831997214
+        }
+    }
+]
