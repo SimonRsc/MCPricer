@@ -126,6 +126,9 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic
         LET(ic, d) = 2 * 1.96 * sqrt(estim) / sqrt(M);
     }
 
-    pnl_mat_free(&shift_path);
-}
+MonteCarlo::MonteCarlo(BlackScholesModel *mod, Option *opt, PnlRng *rng, int nbSamples) : mod_(mod), opt_(opt),
+                                                                                          rng_(rng),
+                                                                                          nbSamples_(nbSamples) {
+    pnl_rng_sseed(rng_, time(0));
 
+}
