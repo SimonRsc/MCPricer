@@ -78,6 +78,7 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
     }
 }
 
-void BlackScholesModel::simul_market(int H){
-    
-}
+//PnlMat *BlackScholesModel::simul_market(int H, PnlRng *rng){
+//    PnlMat *market = pnl_mat_create(H, size_);
+//    completePath(market, H, rng, )
+//}

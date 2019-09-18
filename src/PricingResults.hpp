@@ -6,44 +6,25 @@ class PricingResults
 {
 private:
     double price;
-    PnlVect *delta;
+    const PnlVect * delta;
     double priceStdDev;
-    PnlVect *deltaStdDev;
+    const PnlVect *deltaStdDev;
 public:
-    PricingResults(double price, double priceStdDev, const PnlVect * const delta, const PnlVect *const deltaStdDev)
-    {
-        this->price = price;
-        this->priceStdDev = priceStdDev;
-        this->delta = pnl_vect_copy(delta);
-        this->deltaStdDev = pnl_vect_copy(deltaStdDev);
-    }
+    PricingResults(double price, double priceStdDev, const PnlVect *const delta, const PnlVect *const deltaStdDev)
+        : price(price)
+        , priceStdDev(priceStdDev)
+        , delta(delta)
+        , deltaStdDev(deltaStdDev)
+    { }
 
-    ~PricingResults()
-    {
-        pnl_vect_free(&delta);
-        pnl_vect_free(&deltaStdDev);
-    }
+    ~PricingResults() { }
 
-    PricingResults(const PricingResults &pr) : price(pr.price), priceStdDev(pr.priceStdDev)
-    {
-        delta = pnl_vect_copy(pr.Delta());
-        deltaStdDev = pnl_vect_copy(pr.DeltaStdDev());
-    }
-
-    PricingResults& operator= (const PricingResults &pr)
-    {
-        if (this == &pr)
-        {
-            return *this;
-        }
-        pnl_vect_free(&delta);
-        pnl_vect_free(&deltaStdDev);
-        price = pr.Price();
-        priceStdDev = pr.PriceStdDev();
-        delta = pnl_vect_copy(pr.Delta());
-        deltaStdDev = pnl_vect_copy(pr.DeltaStdDev());
-        return *this;
-    }
+    PricingResults(const PricingResults &pr)
+        : price(pr.price)
+        , priceStdDev(pr.priceStdDev)
+        , delta(pr.delta)
+        , deltaStdDev(pr.deltaStdDev)
+    { }
 
     double Price() const
     {
@@ -65,5 +46,5 @@ public:
         return deltaStdDev;
     }
 
-    std::string ToJson();
+    friend std::ostream& operator<<(std::ostream &stm, const PricingResults &res);
 };

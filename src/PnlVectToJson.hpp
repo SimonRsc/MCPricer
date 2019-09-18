@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <iostream>
 #include "pnl/pnl_vector.h"
 
-extern std::string ConvertToJson(const PnlVect * const vect);
+extern std::ostream& operator<<(std::ostream &stm, const PnlVect * const vect);
