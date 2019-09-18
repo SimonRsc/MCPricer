@@ -31,8 +31,8 @@ TEST_F(TestDelta, Asian) {
     auto ic = pnl_vect_create(2);
     auto past = pnl_mat_create_from_scalar(1, 2, 100);
     mc->delta(past, 0., deltas, ic);
-    EXPECT_NEAR(GET(deltas, 0), 0.281640, 3*GET(ic, 0));
-    EXPECT_NEAR(GET(deltas, 1), 0.281951, 3*GET(ic, 1));
+    EXPECT_NEAR(GET(deltas, 0), 0.281640, GET(ic, 0)/2);
+    EXPECT_NEAR(GET(deltas, 1), 0.281951, GET(ic, 1)/2);
 }
 
 
@@ -49,8 +49,8 @@ TEST_F(TestDelta, Basket) {
     auto ic = pnl_vect_create(40);
     auto past = pnl_mat_create_from_scalar(1, 40, 100);
     mc->delta(past, 0., deltas, ic);
-    EXPECT_NEAR(GET(deltas, 0), 0.024842, 3*GET(ic, 0));
-    EXPECT_NEAR(GET(deltas, 1), 0.024847, 3*GET(ic, 1));
+    EXPECT_NEAR(GET(deltas, 0), 0.024842, GET(ic, 0)/2);
+    EXPECT_NEAR(GET(deltas, 1), 0.024847, GET(ic, 1)/2);
 }
 
 int main(int argc, char **argv)
