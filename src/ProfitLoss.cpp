@@ -11,17 +11,18 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
 
     double prix;
     double ic;
-    PnlVect *dIc;
+    PnlVect *dIc = pnl_vect_create(path->n);
     PnlVect *delta = pnl_vect_create(path->n);
     PnlVect *deltaMoins = pnl_vect_create(path->n);
     PnlVect *deltaTmp = pnl_vect_create(path->n);
 
-    PnlMat past;
+    PnlMat *past = pnl_mat_create(1, 1);
+    pnl_mat_extract_subblock(past, path, 0, 1, 0, path->n);
 
     PnlVect *S = pnl_vect_create(path->n);
 
     monteCarlo->price(prix, ic);
-    monteCarlo->delta(NULL, 0, delta, dIc);
+    monteCarlo->delta(past, 0, delta, dIc);
 
     pnl_mat_get_row(S, path, 0);
 
@@ -30,9 +31,9 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     pnl_vect_clone(deltaMoins, delta);
 
     for(int i = 1; i <= H; i++){
-        pnl_mat_extract_subblock(&past, path, 0, i, 0, path->n - 1);
+        pnl_mat_extract_subblock(past, path, 0, i+1, 0, path->n);
 
-        monteCarlo->delta(&past, i, delta, dIc);
+        monteCarlo->delta(past, i, delta, dIc);
 
         pnl_mat_get_row(S, path, i);
 

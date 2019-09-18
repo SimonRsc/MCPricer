@@ -57,6 +57,8 @@ TEST_F(TestProfitLoss, TestPL){
 
     ProfitLoss::PAndL(&MC, path, 5, 5, pL);
 
+    cout<<pL<<endl;
+
 }
 
 
