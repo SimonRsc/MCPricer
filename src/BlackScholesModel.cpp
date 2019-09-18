@@ -30,8 +30,8 @@ void BlackScholesModel::completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng,
             MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, rng, r);;
         }
     }
-    pnl_vect_free(&Ld);
-    pnl_vect_free(&Q);
+    /*pnl_vect_free(&Ld);
+    pnl_vect_free(&Q);*/
 }
 
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
@@ -55,8 +55,8 @@ double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *
     pnl_vect_free(&G);
     pnl_vect_free(&Ld);
     return Std*exp(exposant);
-}*/
-
+}
+/*
 double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *randomGenerator,PnlVect *Ld, PnlVect *G){
     double volatility = GET(sigma_, productIndex);
     pnl_mat_get_row(Ld, L_, productIndex);
@@ -64,7 +64,7 @@ double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *
     double LdG = pnl_vect_scalar_prod(Ld, G);
     double exposant = (r_-pow(volatility,2)/2)*dt+volatility*sqrt(dt)*LdG;
     return Std*exp(exposant);
-}
+}*/
 
 BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot) : size_(
         size), r_(r), rho_(rho), sigma_(sigma), spot_(spot) {

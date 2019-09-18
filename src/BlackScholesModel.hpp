@@ -82,9 +82,9 @@ public:
     void simul_market(int H);
 };
 
-
+/*
     double next(double Std, int productIndex, double dt, PnlRng *randomGenerator,PnlVect *Ld, PnlVect *G);
 
     };
-
+*/
 
