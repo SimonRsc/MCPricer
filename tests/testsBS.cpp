@@ -14,21 +14,23 @@ protected:
     }
 
     virtual void SetUp() {
-        pnl_rng_sseed(rng_, 1);
+        pnl_rng_sseed(rng_, 0);
     }
 
     virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
     }
-    // Objects declared here can be used by all tests in the test case for Foo.
+
+    ~BSTest(){
+        pnl_rng_free(&rng_);
+    }
 };
 
 TEST_F(BSTest, test_cholesky) {
-    auto *BS = new BlackScholesModel(2, 0.02, 0, pnl_vect_create_from_scalar(2, 0.2), pnl_vect_create_from_scalar(2,10));
+    auto *BS = new BlackScholesModel(2, 0.02, 0.5, pnl_vect_create_from_scalar(2, 0.2), pnl_vect_create_from_scalar(2,10));
     PnlMat *L = BS->L_;
     PnlMat *result = pnl_mat_mult_mat(L, pnl_mat_transpose(L));
-    PnlMat *id = pnl_mat_create_diag(pnl_vect_create_from_scalar(2,1));
+    PnlMat *id = pnl_mat_create_from_scalar(2,2,0.5);
+    pnl_mat_set_diag(id, 1, 0);
     EXPECT_EQ(pnl_mat_isequal(result, id,0.01), 1);
     pnl_mat_free(&result);
     pnl_mat_free(&id);
@@ -50,9 +52,7 @@ TEST_F(BSTest, test_bs1Dim) {
     auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot);
     PnlMat *path = pnl_mat_create(11, 1);
     BS->asset(path, 10, 10, rng_);
-    for (int i = 0; i < 11; ++i) {
-        cout << MGET(path, i, 0) << "\n";
-    }
+    pnl_mat_print(path);
     pnl_mat_free(&path);
     delete BS;
 }
