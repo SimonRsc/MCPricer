@@ -1,7 +1,3 @@
-//
-// Created by lamur on 12/09/2019.
-//
-
 #include <iostream>
 #include <gtest/gtest.h>
 #include "../src/BlackScholesModel.hpp"

@@ -5,6 +5,7 @@ set(SRC
     BasketOption.cpp
     AsianOption.cpp
     PerformanceOption.cpp
+    ProfitLoss.cpp
     ../tests/fakeSrc/FakeBlackScholesModel.cpp
     ReadData.cpp
     )
