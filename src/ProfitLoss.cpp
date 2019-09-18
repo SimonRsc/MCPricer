@@ -33,7 +33,7 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     for(int i = 1; i <= H; i++){
         pnl_mat_extract_subblock(past, path, 0, i+1, 0, path->n);
 
-        monteCarlo->delta(past, i, delta, dIc);
+        monteCarlo->delta(past, i*T/H, delta, dIc);
 
         pnl_mat_get_row(S, path, i);
 
