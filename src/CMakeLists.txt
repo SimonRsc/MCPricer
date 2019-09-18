@@ -8,6 +8,8 @@ set(SRC
     ProfitLoss.cpp
     ../tests/fakeSrc/FakeBlackScholesModel.cpp
     ReadData.cpp
+    PricingResults.cpp
+    PnlVectToJson.cpp
     )
 
 add_library(MCPricer ${SRC})

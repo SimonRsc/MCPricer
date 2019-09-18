@@ -36,7 +36,7 @@ TEST_F(BSTest, test_bsNext) {
     auto *BS = new BlackScholesModel(2, 0.02, 0, vol, spot);
     PnlRng *rng = pnl_rng_create(PNL_RNG_KNUTH);
     pnl_rng_sseed(rng, 0);
-    EXPECT_NEAR(0.934, BS->next(1, 0, 1, rng, 0.02), 0.01);
+    EXPECT_NEAR(0.934, BS->next(1, 0, 1, 0.02), 0.01);
     pnl_rng_free(&rng);
     delete BS;
 }
