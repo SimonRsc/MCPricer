@@ -82,7 +82,7 @@ public:
 
     void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index, double r);
 
-    void simul_market(int H);
+    void simul_market(PnlMat* market, double H, double endDate, PnlRng *rng);
 };
 
 /*

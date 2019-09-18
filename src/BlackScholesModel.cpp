@@ -80,7 +80,13 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
     }
 }
 
-//PnlMat *BlackScholesModel::simul_market(int H, PnlRng *rng){
-//    PnlMat *market = pnl_mat_create(H, size_);
-//    completePath(market, H, rng, )
-//}
+void BlackScholesModel::simul_market(PnlMat* market, double H, double endDate, PnlRng *rng){
+    pnl_mat_set_row(market, spot_, 0);
+    double dt = endDate/H;
+    for (int i = 1; i < H+1; ++i) {
+        pnl_vect_rng_normal(G_, size_, rng);
+        for (int j = 0; j < size_; ++j) {
+            MLET(market, i, j) = next(MGET(market, i - 1, j), j, dt, GET(trend_, j));;
+        }
+    }
+}
