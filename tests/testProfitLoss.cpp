@@ -25,7 +25,7 @@ public:
 
         auto lambda = pnl_vect_create_from_scalar(1, 0.25);
         auto spots = pnl_vect_create_from_scalar(1, 5);
-        mod = new FakeBlackScholesModel(1, 0.01, 0.5,lambda, spots);
+        mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots);
 
         //Creation de Monte Carlo
 
