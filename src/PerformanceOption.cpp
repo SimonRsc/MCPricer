@@ -3,13 +3,21 @@
 
 double PerformanceOption::payoff(const PnlMat *path) {
     double payoff = 0;
+    PnlVect *rowInf = pnl_vect_create(size_);
+    PnlVect *rowSup = pnl_vect_create(size_);
+
     for(int i = 1 ; i <= this->nbTimeSteps_ ; i++){
-        double sum_inf = 0 , sum = 0;
+        //double sum_inf = 0 , sum = 0;
         for(int assetNum = 0; assetNum < this->size_ ; assetNum++){
+            pnl_mat_get_row(rowInf,path,i-1);
+            pnl_mat_get_row(rowSup,path,i);
+            pnl_vect_mult_vect_term(rowInf,lambdas);
+            pnl_vect_mult_vect_term(rowSup,lambdas);
+            /*
             sum_inf += GET(lambdas,assetNum) * MGET(path,i-1,assetNum);
-            sum +=GET(lambdas,assetNum)* MGET(path,i,assetNum);
+            sum +=GET(lambdas,assetNum)* MGET(path,i,assetNum);*/
         }
-        double tmp_res = ((double) sum / sum_inf) - 1;
+        double tmp_res = ((double) pnl_vect_sum(rowSup) / pnl_vect_sum(rowInf)) - 1;
         if(tmp_res >= 0){
             payoff+= tmp_res;
         }

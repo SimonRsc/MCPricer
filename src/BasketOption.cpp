@@ -35,7 +35,7 @@
 BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_) {
 
     //Vérification des lambdas
-    assert(pnl_vect_sum(lambdas) == 1);
+    assert(pnl_vect_sum(lambdas)- 1 < 0.00001);
 
     this->lambdas = lambdas;
     this->K_ = k;

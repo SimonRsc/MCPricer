@@ -14,7 +14,7 @@ public:
     int nbSamples_; /*! nombre de tirages Monte Carlo */
 
     MonteCarlo(BlackScholesModel* mod_, Option* opt_,PnlRng *rng_, int nbSamples_);
-
+    MonteCarlo()=default;
     ~MonteCarlo();
 
     /**

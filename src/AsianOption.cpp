@@ -6,7 +6,7 @@ using namespace std;
 AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_){
 
     //Vérification des lambdas
-    assert(pnl_vect_sum(lambdas) == 1);
+    assert(pnl_vect_sum(lambdas)-1<0.00001);
     assert(k >= 0);
 
     this->lambdas = lambdas;
