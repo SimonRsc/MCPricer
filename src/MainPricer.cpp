@@ -30,7 +30,6 @@ int main(int argc, char *argv[]){
 
     PricingResults res(prix, ic, delta, deltaStdDev);
     std::cout << res << std::endl;
-    delete option;
-    delete model;
+
 
 }

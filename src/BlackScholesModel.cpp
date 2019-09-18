@@ -74,20 +74,9 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
                                    double timestep) {
     int index = ceil(t/timestep);
     int m = path->m;
-
-
-    //TODO optimisation à tester
-    pnl_mat_clone(shift_path, path);
-    PnlVect *V = pnl_vect_create(m);
-    pnl_mat_get_col(V,shift_path,d);
-    pnl_vect_mult_scalar(V,(1+h));
-    pnl_mat_set_col(shift_path,V,d);
-
-    /*
     for (int i = index; i < m; ++i) {
         MLET(shift_path, i, d) = MGET(path, i, d)*(1+h);
     }
-    */
 }
 
 //PnlMat *BlackScholesModel::simul_market(int H, PnlRng *rng){

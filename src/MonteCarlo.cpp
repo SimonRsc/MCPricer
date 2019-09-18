@@ -42,7 +42,8 @@ void MonteCarlo::price(double &prix, double &ic){
             ((sumSquare / M) - pow(sum / M,2));
 
     //Calcul de l'intervalle de confiance a 95%
-    ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+   // ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+   ic=sqrt(estim);
 }
 
 void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic){
@@ -73,11 +74,12 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic){
     prix = exp(-r * (T - t)) * sum / M;
 
     //Calcul de l'estimateur
-    estim = (double) exp(-2 * r * (T - t)) *
-            ((sumSquare / M) - pow(sum / M,2));
+    estim = (double) exp(-2 * r * (T - t)) * ((sumSquare / M) - pow(sum / M,2));
 
     //Calcul de l'intervalle de confiance a 95%
-    ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+     ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+
+
     }
 
 void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic) {
