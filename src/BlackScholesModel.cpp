@@ -24,10 +24,11 @@ void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps,
 }
 
 void BlackScholesModel::completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index, double r) {
+
     for (int i = index; i < nbTimeSteps + 1; ++i) {
         pnl_vect_rng_normal(G_, size_, rng);
         for (int j = 0; j < size_; ++j) {
-            MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, r);;
+            MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, r);
         }
     }
     /*pnl_vect_free(&Ld);
