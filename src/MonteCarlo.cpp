@@ -27,6 +27,7 @@ void MonteCarlo::price(double &prix, double &ic){
     //Calcul du prix a t=0
     for(int i = 0; i < this->nbSamples_; i++){
         mod_->asset(path, this->opt_->T_, nbTimeSteps, this->rng_);
+        //pnl_mat_print(path);
         phi = this->opt_->payoff(path);
         sum += phi;
         sumSquare += pow(phi, 2);

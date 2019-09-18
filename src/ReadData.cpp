@@ -58,7 +58,6 @@ ReadData::ReadData(char *argv) {
     }
 
     this->n_samples = n_samples;
-
     delete P;
 }
 
