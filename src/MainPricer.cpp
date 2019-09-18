@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
     MC.mod_ = model;
     MC.nbSamples_ = rd->getNombreSample();
     MC.rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(MC.rng_, time(0));
+    pnl_rng_sseed(MC.rng_, 0);
     // Faut il changer la seed à chaque fois
 
     double prix;

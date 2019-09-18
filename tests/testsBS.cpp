@@ -57,6 +57,20 @@ TEST_F(BSTest, test_bs1Dim) {
     delete BS;
 }
 
+TEST_F(BSTest, test_bs5Dim) {
+    PnlVect *vol = pnl_vect_create_from_scalar(5, 0.2);
+    PnlVect *spot = pnl_vect_create_from_scalar(5,10);
+    auto *BS = new BlackScholesModel(5, 0.02, 0.5, vol, spot);
+    PnlRng *rng = pnl_rng_create(PNL_RNG_KNUTH);
+    pnl_rng_sseed(rng, 1);
+    PnlMat *path = pnl_mat_create(11, 5);
+    BS->asset(path, 10, 10, rng);
+    cout << "\n";
+    pnl_mat_print(path);
+    pnl_rng_free(&rng);
+    pnl_mat_free(&path);
+    delete BS;
+}
 
 TEST_F(BSTest, test_bsAsset2_1Dim) {
     PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);

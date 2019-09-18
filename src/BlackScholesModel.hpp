@@ -16,6 +16,7 @@ public:
     PnlVect *trend_; /// tendance du modèle
     PnlVect *sigma_; /// vecteur de volatilités
     PnlVect *spot_; /// valeurs initiales des sous-jacents
+    PnlVect *G_; ///Vecteur de loi normale
     PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
 
     /**
@@ -71,7 +72,7 @@ public:
      * @param randomGenerator le générateur aléatoire du modèle
      * @return La prochaine valeur de l'actif dans le modèle
      */
-    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator, double r);
+    double next(double Std, int productIndex, double dt, double r);
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
 
