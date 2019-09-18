@@ -4,7 +4,7 @@
 
 #include "ProfitLoss.h"
 
-static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL){
+void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL){
     Option *opt = monteCarlo->opt_;
 
     double V = 0;

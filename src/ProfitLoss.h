@@ -9,7 +9,8 @@
 #include "pnl/pnl_matrix.h"
 
 class ProfitLoss {
-    static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, double *pL);
+public:
+    static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL);
 };
 
 
