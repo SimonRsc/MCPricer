@@ -7,14 +7,18 @@
     double payoff = 0;
     bool isSell = false;
     double strike = this->K_;
-    if(this->K_ < 0){
+    
+    if(strike < 0){
         strike = -strike;
         isSell = true;
     }
 
-    for (int assetNumber = 0; assetNumber < this->size_; ++assetNumber) {
-         payoff += GET(lambdas,assetNumber) * MGET(path, this->nbTimeSteps_, assetNumber);
-     }
+    PnlVect *lastRow = pnl_vect_create(size_);
+
+    pnl_mat_get_row(lastRow,path,nbTimeSteps_);
+    pnl_vect_mult_vect_term(lastRow,lambdas);
+    payoff = pnl_vect_sum(lastRow);
+    pnl_vect_free(&lastRow);
 
     payoff -= strike;
     if(payoff >= 0){
@@ -31,11 +35,7 @@
 BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_) {
 
     //Vérification des lambdas
-    double sum = 0;
-    for(int i = 0 ; i < size_ ; ++i){
-        sum += GET(lambdas,i);
-    }
-    assert(sum -1 < 0.001);
+    assert(pnl_vect_sum(lambdas) == 1);
 
     this->lambdas = lambdas;
     this->K_ = k;

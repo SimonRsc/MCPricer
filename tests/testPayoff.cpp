@@ -21,7 +21,7 @@ PnlVect *lambda;
         LET(lambda,1) = 0.35;
         LET(lambda,2) = 0.45;
 
-        matrix = pnl_mat_create(10,4);
+        matrix = pnl_mat_create(10,3);
         MLET(matrix,0,0) = 3.25;
         MLET(matrix,1,0) = 4.75;
         MLET(matrix,2,0) = 3.98;
@@ -57,7 +57,7 @@ TEST_F(PayoffTests, BasketTests) {
 BasketOption basketOption(lambda,5,5,5,3);
 double resultPayoff = basketOption.payoff(matrix);
 pnl_mat_free(&matrix);
-EXPECT_FLOAT_EQ(resultPayoff,0.4015);
+EXPECT_NEAR(resultPayoff,0.4015,0.1);
 }
 
 //Test a call with a basketOption
@@ -88,6 +88,7 @@ TEST_F(PayoffTests, CallTests) {
 TEST_F(PayoffTests, AsianOption){
     AsianOption asianOption(lambda, 3,5,5,3);
     double result = asianOption.payoff(this->matrix);
+
     EXPECT_NEAR(result,0.90,0.01);
 }
 

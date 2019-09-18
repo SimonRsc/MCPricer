@@ -15,6 +15,8 @@ void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps,
     pnl_mat_set_subblock(path, &sub, 0, 0);
 
     index++;
+    PnlVect *Ld = pnl_vect_create(size_);
+    PnlVect *Q= pnl_vect_create(size_);
     for (int c = 0; c < size_; ++c) {
         MLET(path, index, c) = next(MGET(past, index, c), c, (index+1)*dt-t,rng, r_);
     }
@@ -28,16 +30,18 @@ void BlackScholesModel::completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng,
             MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, rng, r);;
         }
     }
+    pnl_vect_free(&Ld);
+    pnl_vect_free(&Q);
 }
 
 PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
     if (rho_>=1 || rho_<= -1/(((double)size_)-1)){
         throw std::invalid_argument("Rho should be in ]−1/(D−1),1[");
     }
-    PnlMat *corrMatrix = pnl_mat_create_from_scalar(size_, size_, rho_);
-    pnl_mat_set_diag(corrMatrix, 1, 0);
-    pnl_mat_chol(corrMatrix);
-    return  corrMatrix;
+   PnlMat *corrMatrix = pnl_mat_create_from_scalar(size_, size_, rho_);
+   pnl_mat_set_diag(corrMatrix, 1, 0);
+   pnl_mat_chol(corrMatrix);
+   return  corrMatrix;
 }
 
 double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *randomGenerator, double r){
@@ -50,6 +54,15 @@ double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *
     double exposant = (r-pow(volatility,2)/2)*dt+volatility*sqrt(dt)*LdG;
     pnl_vect_free(&G);
     pnl_vect_free(&Ld);
+    return Std*exp(exposant);
+}*/
+
+double BlackScholesModel::next(double Std, int productIndex, double dt, PnlRng *randomGenerator,PnlVect *Ld, PnlVect *G){
+    double volatility = GET(sigma_, productIndex);
+    pnl_mat_get_row(Ld, L_, productIndex);
+    pnl_vect_rng_normal_d(G, size_, randomGenerator);
+    double LdG = pnl_vect_scalar_prod(Ld, G);
+    double exposant = (r_-pow(volatility,2)/2)*dt+volatility*sqrt(dt)*LdG;
     return Std*exp(exposant);
 }
 

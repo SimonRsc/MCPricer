@@ -83,3 +83,8 @@ public:
 };
 
 
+    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator,PnlVect *Ld, PnlVect *G);
+
+    };
+
+
