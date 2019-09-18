@@ -6,11 +6,7 @@ using namespace std;
 AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_) : Option(T_,nbTimeSteps,size_){
 
     //Vérification des lambdas
-    double sum = 0;
-    for(int i = 0 ; i < size_ ; ++i){
-        sum += GET(lambdas,i);
-    }
-    assert(sum == 1);
+    assert(pnl_vect_sum(lambdas)-1<0.00001);
     assert(k >= 0);
 
     this->lambdas = lambdas;
@@ -24,13 +20,12 @@ AsianOption::~AsianOption() {
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
     double steps =(double) 1 / (this->nbTimeSteps_ + 1);
+    PnlVect * col = pnl_vect_create(nbTimeSteps_);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
-        double sum = 0;
-        for(int i = 0 ; i <= nbTimeSteps_; ++i){
-            sum += MGET(path,i,assetNum);
-        }
-        payoff += GET(lambdas,assetNum) * steps* sum;
+        pnl_mat_get_col(col,path,assetNum);
+        payoff += GET(lambdas,assetNum) * steps* pnl_vect_sum(col);
     }
+    pnl_vect_free(&col);
     payoff -= K_;
     if(payoff >= 0){
         return payoff;

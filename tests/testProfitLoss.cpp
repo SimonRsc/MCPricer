@@ -18,7 +18,7 @@ class TestProfitLoss : public ::testing::Test{
 public:
     CallOption *opt;
     BlackScholesModel *mod;
-    MonteCarlo MC;
+    MonteCarlo *MC;
 
     virtual void SetUp(){
         opt = new CallOption(1.5, 5, 5, 1);
@@ -28,12 +28,9 @@ public:
         mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots);
 
         //Creation de Monte Carlo
+        MonteCarlo MCs(mod,opt, pnl_rng_create(PNL_RNG_MERSENNE),100);
+        MC = &MCs;
 
-        MC.opt_ = opt;
-        MC.mod_ = mod;
-        MC.nbSamples_ = 1;
-        MC.rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-        pnl_rng_sseed(MC.rng_, 1234);
         // Faut il changer la seed à chaque fois
     }
 
@@ -55,7 +52,7 @@ TEST_F(TestProfitLoss, TestPL){
 
     double pL;
 
-    ProfitLoss::PAndL(&MC, path, 5, 5, pL);
+    ProfitLoss::PAndL(MC, path, 5, 5, pL);
 
     cout<<pL<<endl;
 

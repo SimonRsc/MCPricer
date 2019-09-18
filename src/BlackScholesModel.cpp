@@ -24,10 +24,12 @@ void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps,
 }
 
 void BlackScholesModel::completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index, double r) {
+
+
     for (int i = index; i < nbTimeSteps + 1; ++i) {
         pnl_vect_rng_normal(G_, size_, rng);
         for (int j = 0; j < size_; ++j) {
-            MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, r);;
+            MLET(path, i, j) = next(MGET(path, i - 1, j), j, dt, r);
         }
     }
 }
@@ -44,35 +46,35 @@ PnlMat* BlackScholesModel::CholeskyCorrelationMatrix() {
 
 double BlackScholesModel::next(double Std, int productIndex, double dt, double r){
     double volatility = GET(sigma_, productIndex);
-    PnlVect *Ld = pnl_vect_create(size_);
-    pnl_mat_get_row(Ld, L_, productIndex);
-    double LdG = pnl_vect_scalar_prod(Ld, G_);
+    pnl_mat_get_row(Ld_, L_, productIndex);
+    double LdG = pnl_vect_scalar_prod(Ld_, G_);
     double exposant = (r-pow(volatility,2)/2)*dt+volatility*sqrt(dt)*LdG;
-    pnl_vect_free(&Ld);
     return Std*exp(exposant);
 }
+
 
 BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot) : size_(
         size), r_(r), rho_(rho), sigma_(sigma), spot_(spot) {
     L_ = CholeskyCorrelationMatrix();
     G_ = pnl_vect_create(size_);
+    Ld_= pnl_vect_create(size_);
 
 }
 
 BlackScholesModel::~BlackScholesModel() {
     pnl_mat_free(&L_);
     pnl_vect_free(&G_);
+    pnl_vect_free(&Ld_);
     pnl_vect_free(&this->spot_);
     pnl_vect_free(&this->sigma_);
+
 }
 
 void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d, double h, double t,
                                    double timestep) {
     int index = ceil(t/timestep);
     int m = path->m;
-
-    pnl_mat_clone(shift_path, path);
-
+    pnl_mat_clone(shift_path,path);
     for (int i = index; i < m; ++i) {
         MLET(shift_path, i, d) = MGET(path, i, d)*(1+h);
     }
