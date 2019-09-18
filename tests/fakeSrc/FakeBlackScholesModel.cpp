@@ -1,7 +1,3 @@
-//
-// Created by cecile on 13/09/19.
-//
-
 #include "FakeBlackScholesModel.h"
 
 using namespace std;
