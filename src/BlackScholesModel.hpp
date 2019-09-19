@@ -18,6 +18,8 @@ public:
     PnlVect *spot_; /// valeurs initiales des sous-jacents
     PnlVect *G_; ///Vecteur de loi normale
     PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
+    PnlVect *Ld_;
+
 
     /**
      * Génère une trajectoire du modèle et la stocke dans path

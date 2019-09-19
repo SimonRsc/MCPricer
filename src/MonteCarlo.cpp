@@ -42,7 +42,8 @@ void MonteCarlo::price(double &prix, double &ic){
             ((sumSquare / M) - pow(sum / M,2));
 
     //Calcul de l'intervalle de confiance a 95%
-    ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+    ic = sqrt(estim) / sqrt(M);
+
 }
 
 void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic){
@@ -73,11 +74,12 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &ic){
     prix = exp(-r * (T - t)) * sum / M;
 
     //Calcul de l'estimateur
-    estim = (double) exp(-2 * r * (T - t)) *
-            ((sumSquare / M) - pow(sum / M,2));
+    estim = (double) exp(-2 * r * (T - t)) * ((sumSquare / M) - pow(sum / M,2));
 
     //Calcul de l'intervalle de confiance a 95%
-    ic = 2 * 1.96 * sqrt(estim) / sqrt(M);
+     ic = sqrt(estim) / sqrt(M);
+
+
     }
 
 void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic) {
@@ -122,7 +124,8 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic
                 (M * 2 * st * h);
         estim = exp(-2 * r * (T - t)) *
                      ((sumSquare / M) - pow(sum / M,2)) / pow(2 * st * h, 2);
-        LET(ic, d) = 2 * 1.96 * sqrt(estim) / sqrt(M);
+        //LET(ic, d) = 2 * 1.96 * sqrt(estim) / sqrt(M);
+        LET(ic, d) = sqrt(estim) / sqrt(M);
     }
         pnl_mat_free(&shift_path);
 }
@@ -130,6 +133,6 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic
 MonteCarlo::MonteCarlo(BlackScholesModel *mod, Option *opt, PnlRng *rng, int nbSamples) : mod_(mod), opt_(opt),
                                                                                           rng_(rng),
                                                                                           nbSamples_(nbSamples) {
-    pnl_rng_sseed(rng_, time(0));
+    pnl_rng_sseed(rng_, 0);
 
 }

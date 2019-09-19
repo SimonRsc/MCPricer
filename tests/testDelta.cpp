@@ -26,7 +26,7 @@ TEST_F(TestDelta, Asian) {
     mc->opt_ = rd->getOption();
     mc->nbSamples_ = 50000;
     mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(mc->rng_, time(0));
+    pnl_rng_sseed(mc->rng_,0);
     auto deltas = pnl_vect_create(2);
     auto ic = pnl_vect_create(2);
     auto past = pnl_mat_create_from_scalar(1, 2, 100);
