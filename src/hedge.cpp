@@ -25,6 +25,7 @@ int main(int argc, char**argv){
     double covErr=0;
 
     ProfitLoss::PAndL(&MC,past,0.,past->m,covErr);
-    HedgingResults hedgeResult(prix,ic,covErr);
+    HedgingResults res(prix,ic,covErr);
+    std::cout << res << std::endl;
 
 }

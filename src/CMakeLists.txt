@@ -1,6 +1,5 @@
 set(SRC
-    CallOption.cpp
-    BlackScholesModel.cpp
+        BlackScholesModel.cpp
     MonteCarlo.cpp
     BasketOption.cpp
     AsianOption.cpp
