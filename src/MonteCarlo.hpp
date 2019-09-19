@@ -21,9 +21,9 @@ public:
      * Calcule le prix de l'option à la date 0
      *
      * @param[out] prix valeur de l'estimateur Monte Carlo
-     * @param[out] ic largeur de l'intervalle de confiance
+     * @param[out] st_dev largeur de l'écart-type empirique sur le delta
      */
-    void price(double &prix, double &ic);
+    void price(double &prix, double &st_dev);
 
     /**
      * Calcule le prix de l'option à la date t
@@ -32,10 +32,10 @@ public:
      * jusqu'à l'instant t
      * @param[in] t date à laquelle le calcul est fait
      * @param[out] prix contient le prix
-     * @param[out] ic contient la largeur de l'intervalle
+     * @param[out] st_dev contient l'écart-type empirique sur le delta
      * de confiance sur le calcul du prix
      */
-    void price(const PnlMat *past, double t, double &prix, double &ic);
+    void price(const PnlMat *past, double t, double &prix, double &st_dev);
 
     /**
      * Calcule le delta de l'option à la date t
@@ -44,10 +44,10 @@ public:
      * jusqu'à l'instant t
      * @param[in] t date à laquelle le calcul est fait
      * @param[out] delta contient le vecteur de delta
-     * @param[out] ic contient la largeur de l'intervalle
+     * @param[out] st_dev contient l'écart-type empirique sur le delta
      * de confiance sur le calcul du delta
      */
-    void delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *ic);
+    void delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st_dev);
 
 
 };

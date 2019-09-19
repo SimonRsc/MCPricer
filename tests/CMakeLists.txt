@@ -34,6 +34,7 @@ configure_file(../data/call.dat call.dat)
 configure_file(../data/basket_1.dat basket_1.dat)
 configure_file(../data/asian.dat asian.dat)
 configure_file(../data/basket.dat basket.dat)
+configure_file(../data/perf.dat perf.dat)
 
 
 # Link against gtest or gtest_main as needed. Eg
