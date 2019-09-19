@@ -14,7 +14,7 @@ protected:
     }
 
     virtual void SetUp() {
-        pnl_rng_sseed(rng_, 0);
+        pnl_rng_sseed(rng_, time(0));
     }
 
     virtual void TearDown() {
@@ -109,7 +109,7 @@ TEST_F(BSTest, test_bsSimul) {
 
     PnlMat *simul = pnl_mat_create(11, 5);
 
-    BS->trend_ = pnl_vect_create_from_scalar(5, 0.01);
+    BS->trend_ = pnl_vect_create_from_scalar(5, 0.2);
     BS->simul_market(simul, 10, 10, rng_);
 
     std::cout << "\n" << "-------------" << "\n";
