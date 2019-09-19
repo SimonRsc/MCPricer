@@ -30,7 +30,6 @@ int main(int argc, char *argv[]){
 
     PnlMat *spots = pnl_mat_create(1,rd->getModel()->size_);
     pnl_mat_set_row(spots,rd->getModel()->spot_,0);
-    pnl_mat_print(spots);
 
     MC.delta(spots,0.,delta,deltaStdDev);
     PricingResults res(prix, ic, delta, deltaStdDev);
