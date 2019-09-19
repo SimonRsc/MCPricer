@@ -37,11 +37,20 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(src/3rdparty/jlparser)
 
 # Test the parser
-add_executable(test-parser src/test_parser.cpp src/PricingResults.cpp src/PnlVectToJson.cpp)
-target_link_libraries(test-parser jl_parser ${LIBS})
+#add_executable(test-parser src/test_parser.cpp src/PricingResults.cpp src/PnlVectToJson.cpp)
+#target_link_libraries(test-parser jl_parser ${LIBS})
+#
+#add_executable(mc-example src/mc_example.cpp src/PricingResults.cpp src/PnlVectToJson.cpp)
+#target_link_libraries(mc-example jl_parser ${LIBS})
 
-add_executable(mc-example src/mc_example.cpp src/PricingResults.cpp src/PnlVectToJson.cpp)
-target_link_libraries(mc-example jl_parser ${LIBS})
+add_executable(pricer0 src/pricer0.cpp)
+target_link_libraries(pricer0 MCPricer)
+target_link_libraries(pricer0 ${PNL_LIBRARIES})
+
+add_executable(hedge src/hedge.cpp)
+target_link_libraries(hedge MCPricer)
+target_link_libraries(hedge ${PNL_LIBRARIES})
+
 
 # Print compiler flags
 get_directory_property(DirDefs COMPILE_DEFINITIONS)

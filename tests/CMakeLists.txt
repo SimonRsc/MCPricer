@@ -69,9 +69,7 @@ target_link_libraries(testProfitLoss MCPricer)
 target_link_libraries(testProfitLoss gtest)
 target_link_libraries(testProfitLoss ${PNL_LIBRARIES})
 
-add_executable(MainPricer ../src/MainPricer.cpp )
-target_link_libraries(MainPricer MCPricer)
-target_link_libraries(MainPricer ${PNL_LIBRARIES})
+
 
 add_executable(testDelta testDelta.cpp)
 target_link_libraries(testDelta MCPricer)
