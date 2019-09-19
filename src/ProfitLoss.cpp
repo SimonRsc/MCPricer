@@ -3,11 +3,15 @@
 //
 
 #include "ProfitLoss.h"
+using namespace std;
 
 void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL){
     Option *opt = monteCarlo->opt_;
+    int N = monteCarlo->opt_->nbTimeSteps_;
 
     double V = 0;
+
+    int subIndex = 0;
 
     double prix;
     double ic;
@@ -15,6 +19,8 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     PnlVect *delta = pnl_vect_create(path->n);
     PnlVect *deltaMoins = pnl_vect_create(path->n);
     PnlVect *deltaTmp = pnl_vect_create(path->n);
+
+    PnlVect * tmpVect = pnl_vect_create_from_zero(path->n);
 
     PnlMat *past = pnl_mat_create(1, 1);
     pnl_mat_extract_subblock(past, path, 0, 1, 0, path->n);
@@ -30,13 +36,28 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
 
     pnl_vect_clone(deltaMoins, delta);
 
+    cout<<"PATH : "<<endl;
+
+    pnl_mat_print(path);
     for(int i = 1; i <= H; i++){
-        pnl_mat_extract_subblock(past, path, 0, i+1, 0, path->n);
+
+        //Creation de la sous matrice past pour les calculs du delta
+        if(subIndex % (H/N) == 0){
+            pnl_mat_add_row(past, past->m, tmpVect);
+            subIndex = 0;
+
+        }
+        pnl_mat_get_row(tmpVect, path, i);
+        pnl_mat_set_row(past, tmpVect, past->m-1);
+
+        cout<<"PAST : "<<endl;
+        pnl_mat_print(past);
+        subIndex++;
+
 
         monteCarlo->delta(past, i*T/H, delta, dIc);
 
         pnl_mat_get_row(S, path, i);
-
         pnl_vect_clone(deltaTmp, delta);
 
         //Calcul de la nouvelle valeur du portefeuille
@@ -60,3 +81,24 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     pnl_mat_free(&past);
 
 }
+
+/*void ProfitLoss::PastForDelta(MonteCarlo *monteCarlo, PnlMat *past, int H, double T, PnlMat *newPast){
+    int N = monteCarlo->opt_->nbTimeSteps_;
+    double dt = T/N;
+    double dh = T/H;
+
+    PnlVect *V = pnl_vect_create(past->n);
+    int indexPast = 0;
+
+    for(int i=0; i< past->m; i++){
+        if(ABS(dh * i - dt * indexPast) < 0.0001){
+
+            pnl_mat_get_row(V, past, i);
+            pnl_mat_set_row(newPast, V, indexPast);
+            indexPast++;
+        }
+    }
+
+    pnl_mat_get_row(V, past, past->m-1);
+    pnl_mat_set_row(newPast, V, newPast->m-1);
+}*/
