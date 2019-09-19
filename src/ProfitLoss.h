@@ -11,7 +11,9 @@
 class ProfitLoss {
 public:
     static void PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, double &pL);
+   // void PastForDelta(MonteCarlo *monteCarlo, PnlMat *past, int H, double T, PnlMat *newPast);
 };
 
 
 #endif //MC_PRICER_PROFITLOSS_H
+
