@@ -30,7 +30,6 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-configure_file(../data/call.dat call.dat)
 configure_file(../data/basket_1.dat basket_1.dat)
 configure_file(../data/asian.dat asian.dat)
 configure_file(../data/basket.dat basket.dat)
