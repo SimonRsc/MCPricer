@@ -13,7 +13,7 @@
         isSell = true;
     }
 
-    pnl_mat_get_row(tmp_,path,nbTimeSteps_);
+    pnl_mat_get_row(tmp_,path,path->m-1);
     pnl_vect_mult_vect_term(tmp_,lambdas);
     payoff = pnl_vect_sum(tmp_);
 

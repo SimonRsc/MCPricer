@@ -6,7 +6,7 @@ double PerformanceOption::payoff(const PnlMat *path) {
     PnlVect *rowInf = pnl_vect_create(size_);
     PnlVect *rowSup = pnl_vect_create(size_);
 
-    for(int i = 1 ; i <= this->nbTimeSteps_ ; i++){
+    for(int i = 1 ; i < path->m ; i++){
         //double sum_inf = 0 , sum = 0;
         for(int assetNum = 0; assetNum < this->size_ ; assetNum++){
             pnl_mat_get_row(rowInf,path,i-1);

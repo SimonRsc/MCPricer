@@ -11,7 +11,6 @@ AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps,
 
     this->lambdas = lambdas;
     this->K_ = k;
-    tmp_ = pnl_vect_create(nbTimeSteps);
 }
 
 AsianOption::~AsianOption() {
@@ -21,7 +20,8 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
-    double steps =(double) 1 / (this->nbTimeSteps_ + 1);
+    double steps =(double) 1 / (path->m + 1);
+    tmp_ = pnl_vect_create(path->m);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
         pnl_mat_get_col(tmp_,path,assetNum);
         payoff += GET(lambdas,assetNum) * steps* pnl_vect_sum(tmp_);

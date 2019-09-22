@@ -67,7 +67,9 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     }
     double payoff = opt->payoff(path);
 
-    pL = V + pnl_vect_scalar_prod(deltaMoins, S) - 34,6570315;
+    pL = V + pnl_vect_scalar_prod(deltaMoins, S) - payoff;
+
+//            34,6570315;
 
     pnl_vect_free(&dIc);
     pnl_vect_free(&delta);
