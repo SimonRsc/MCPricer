@@ -4,6 +4,8 @@
 
  double BasketOption::payoff(const PnlMat *path) {
 
+     auto tmp_ = pnl_vect_create(size_);
+
     double payoff = 0;
     bool isSell = false;
     double strike = this->K_;
@@ -18,6 +20,7 @@
     payoff = pnl_vect_sum(tmp_);
 
     payoff -= strike;
+    pnl_vect_free(&tmp_);
     if(payoff >= 0){
         if(isSell){
             return  -payoff;
@@ -36,12 +39,10 @@ BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeStep
 
     this->lambdas = lambdas;
     this->K_ = k;
-    tmp_ = pnl_vect_create(size_);
 }
 
 BasketOption::~BasketOption() {
     pnl_vect_free(&lambdas);
-    pnl_vect_free(&tmp_);
 }
 
 
