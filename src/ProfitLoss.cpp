@@ -36,7 +36,6 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
 
     pnl_vect_clone(deltaMoins, delta);
 
-
     for(int i = 1; i <= H; i++){
 
         //Creation de la sous matrice past pour les calculs du delta
@@ -45,6 +44,7 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
             subIndex = 0;
 
         }
+        //cout<<past->m<<endl;
         pnl_mat_get_row(tmpVect, path, i);
         pnl_mat_set_row(past, tmpVect, past->m-1);
 
@@ -67,7 +67,7 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     }
     double payoff = opt->payoff(path);
 
-    pL = V + pnl_vect_scalar_prod(deltaMoins, S) - payoff;
+    pL = V + pnl_vect_scalar_prod(deltaMoins, S) - 34,6570315;
 
     pnl_vect_free(&dIc);
     pnl_vect_free(&delta);

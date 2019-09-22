@@ -24,7 +24,7 @@ int main(int argc, char**argv){
     PnlMat *past = pnl_mat_create_from_file(marketFile);
     double covErr=0;
 
-    ProfitLoss::PAndL(&MC,past,0.,past->m,covErr);
+    ProfitLoss::PAndL(&MC,past,past->m-1, MC.opt_->T_,covErr);
     HedgingResults res(prix,ic,covErr);
     std::cout << res << std::endl;
 
