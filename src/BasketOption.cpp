@@ -13,12 +13,9 @@
         isSell = true;
     }
 
-    PnlVect *lastRow = pnl_vect_create(size_);
-
-    pnl_mat_get_row(lastRow,path,nbTimeSteps_);
-    pnl_vect_mult_vect_term(lastRow,lambdas);
-    payoff = pnl_vect_sum(lastRow);
-    pnl_vect_free(&lastRow);
+    pnl_mat_get_row(tmp_,path,path->m-1);
+    pnl_vect_mult_vect_term(tmp_,lambdas);
+    payoff = pnl_vect_sum(tmp_);
 
     payoff -= strike;
     if(payoff >= 0){
@@ -39,10 +36,12 @@ BasketOption::BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeStep
 
     this->lambdas = lambdas;
     this->K_ = k;
+    tmp_ = pnl_vect_create(size_);
 }
 
 BasketOption::~BasketOption() {
     pnl_vect_free(&lambdas);
+    pnl_vect_free(&tmp_);
 }
 
 

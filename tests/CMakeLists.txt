@@ -30,11 +30,17 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-#configure_file(../data/call.dat call.dat)
-#configure_file(../data/basket_1.dat basket_1.dat)
-#configure_file(../data/asian.dat asian.dat)
-#configure_file(../data/basket.dat basket.dat)
+configure_file(../data/basket_1.dat basket_1.dat)
+configure_file(../data/asian.dat asian.dat)
+configure_file(../data/basket.dat basket.dat)
+configure_file(../data/perf.dat perf.dat)
+configure_file(../data/basket_2.dat basket_2.dat)
 
+configure_file(../data/market-data/simul_basket_1.dat simul_basket_1.dat)
+configure_file(../data/market-data/simul_asian.dat simul_asian.dat)
+configure_file(../data/market-data/simul_basket.dat simul_basket.dat)
+configure_file(../data/market-data/simul_perf.dat simul_perf.dat)
+configure_file(../data/market-data/simul_basket_2.dat simul_basket_2.dat)
 
 # Link against gtest or gtest_main as needed. Eg
 add_executable(sample gtest-sample.cpp)
@@ -69,9 +75,7 @@ target_link_libraries(testProfitLoss MCPricer)
 target_link_libraries(testProfitLoss gtest)
 target_link_libraries(testProfitLoss ${PNL_LIBRARIES})
 
-add_executable(MainPricer ../src/MainPricer.cpp )
-target_link_libraries(MainPricer MCPricer)
-target_link_libraries(MainPricer ${PNL_LIBRARIES})
+
 
 add_executable(testDelta testDelta.cpp)
 target_link_libraries(testDelta MCPricer)

@@ -15,17 +15,17 @@ AsianOption::AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps,
 
 AsianOption::~AsianOption() {
     pnl_vect_free(&lambdas);
+    pnl_vect_free(&tmp_);
 }
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
-    double steps =(double) 1 / (this->nbTimeSteps_ + 1);
-    PnlVect * col = pnl_vect_create(nbTimeSteps_);
+    double steps =(double) 1 / (path->m );
+    tmp_ = pnl_vect_create(path->m);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
-        pnl_mat_get_col(col,path,assetNum);
-        payoff += GET(lambdas,assetNum) * steps* pnl_vect_sum(col);
+        pnl_mat_get_col(tmp_,path,assetNum);
+        payoff += GET(lambdas,assetNum) * steps* pnl_vect_sum(tmp_);
     }
-    pnl_vect_free(&col);
     payoff -= K_;
     if(payoff >= 0){
         return payoff;

@@ -64,7 +64,7 @@ public:
      * Calcule la factorisée de Cholesky de la matrice Γ à partir du champ rho
      * @return la factorisée L
      */
-    PnlMat* CholeskyCorrelationMatrix();
+    void CholeskyCorrelationMatrix();
 
     /**
      * Calcule la prochaine itération du modèle de Black and Scholes pour un actif donné.
@@ -84,10 +84,4 @@ public:
 
     void simul_market(PnlMat* market, double H, double endDate, PnlRng *rng);
 };
-
-/*
-    double next(double Std, int productIndex, double dt, PnlRng *randomGenerator,PnlVect *Ld, PnlVect *G);
-
-    };
-*/
 

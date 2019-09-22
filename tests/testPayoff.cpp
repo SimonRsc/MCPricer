@@ -70,20 +70,6 @@ TEST_F(PayoffTests, CallWithBasket){
     EXPECT_FLOAT_EQ(result,7.5);
 }
 
-TEST_F(PayoffTests, CallTests) {
-    PnlMat* matrix = pnl_mat_create_from_scalar(10,1,12.5);
-    CallOption option(10,9,9,1);
-    double res1 = option.payoff(matrix);
-
-    CallOption optionBis(19,9,9,1);
-    double res2 = optionBis.payoff(matrix);
-    pnl_mat_free(&matrix);
-    pnl_vect_free(&lambda);
-
-    EXPECT_EQ(res1,2.5);
-    EXPECT_EQ(res2,0);
-
-}
 
 TEST_F(PayoffTests, AsianOption){
     AsianOption asianOption(lambda, 3,5,5,3);

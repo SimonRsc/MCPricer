@@ -1,7 +1,6 @@
 #include "ReadData.hpp"
 #include "3rdparty/jlparser/include/jlparser/parser.hpp"
 #include "BasketOption.h"
-#include "CallOption.h"
 #include "AsianOption.h"
 #include "PerformanceOption.h"
 #include <stdexcept>
