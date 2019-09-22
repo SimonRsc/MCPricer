@@ -20,7 +20,7 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     double payoff = 0;
-    double steps =(double) 1 / (path->m + 1);
+    double steps =(double) 1 / (path->m );
     tmp_ = pnl_vect_create(path->m);
     for(int assetNum = 0 ; assetNum < size_ ; assetNum++){
         pnl_mat_get_col(tmp_,path,assetNum);
