@@ -74,7 +74,7 @@ void BlackScholesModel::shiftAsset(PnlMat *shift_path, const PnlMat *path, int d
                                    double timestep) {
     int index = ceil(t/timestep);
     int m = path->m;
-    pnl_mat_clone(shift_path,path);
+    pnl_mat_clone(shift_path, path);
     for (int i = index; i < m; ++i) {
         MLET(shift_path, i, d) = MGET(path, i, d)*(1+h);
     }
