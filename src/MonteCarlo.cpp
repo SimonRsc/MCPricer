@@ -123,7 +123,8 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
                      ((sumSquare / M) - pow(sum / M,2)) / pow(2 * st * h, 2);
         LET(st_dev, d) = sqrt(estim) / sqrt(M);
     }
-        pnl_mat_free(&shift_path);
+    pnl_mat_free(&shift_path);
+    pnl_mat_free(&path);
 }
 
 MonteCarlo::MonteCarlo(BlackScholesModel *mod, Option *opt, PnlRng *rng, int nbSamples) : mod_(mod), opt_(opt),
