@@ -21,7 +21,7 @@ class MonteCarloTests : public ::testing::Test{
         //BlackScholesModel *mod = new BlackScholesModel(1, 0.02, 0, pnl_vect_create_from_scalar(1, 0.25), pnl_vect_create_from_scalar(1, 10));
         auto lambda = pnl_vect_create_from_scalar(1, 0.25);
         auto spots = pnl_vect_create_from_scalar(1, 5);
-        mod = new FakeBlackScholesModel(1, 0.01, 0.5,lambda, spots);
+        mod = new FakeBlackScholesModel(1, 0.01, 0.5,lambda, spots, 5, 5);
 
         //Creation de Monte Carlo
 

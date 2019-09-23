@@ -78,12 +78,13 @@ public:
      * @return La prochaine valeur de l'actif dans le modèle
      */
     double next(double Std, int productIndex, double r);
+    double next(double Std, int productIndex);
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot, int nbTimeSteps, double T);
 
     virtual ~BlackScholesModel();
 
-    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index, double r);
+    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index);
 
     void simul_market(PnlMat* market, double H, double endDate, PnlRng *rng);
 };
