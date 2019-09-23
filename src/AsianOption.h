@@ -4,6 +4,9 @@
 
 class AsianOption : public Option {
 
+private:
+    PnlVect * tmp_;
+    double steps;
 public :
      AsianOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_);
     ~AsianOption();

@@ -4,6 +4,9 @@
 #include "Option.hpp"
 
 class BasketOption : public Option{
+private:
+    PnlVect * tmp_;
+    bool isSell;
 public:
     BasketOption(PnlVect *lambdas, double k, double T_, int nbTimeSteps, int size_);
     ~BasketOption();
