@@ -7,7 +7,7 @@
 
 using namespace std;
 
-ReadData::ReadData(char *argv) {
+ReadData::ReadData(char *fileName) {
     double T, r, strike, correlation;
     PnlVect *spot, *sigma, *divid, *payoff_coeff;
     string model_type;
@@ -15,7 +15,7 @@ ReadData::ReadData(char *argv) {
     int size, timestep_number;
     size_t n_samples;
 
-    char *infile = argv;
+    char *infile = fileName;
     Param *P = new Parser(infile);
 
     P->extract("model type", model_type);
@@ -42,7 +42,7 @@ ReadData::ReadData(char *argv) {
     if (model_type == "bs") {
         model = new BlackScholesModel(size, r, correlation, sigma, spot, timestep_number, T);
     } else {
-        // TODO Bad model (maybe we'll use another model during the PEPS)
+        throw invalid_argument("Le type de modèle demandé n'est pas pris en compte");
     }
 
     if (option_type == "basket") {
@@ -53,7 +53,7 @@ ReadData::ReadData(char *argv) {
     } else if (option_type == "performance") {
         option = new PerformanceOption(payoff_coeff, T, timestep_number, size);
     } else {
-        throw new invalid_argument("Le type d'option demandé n'est pas pris en compte");
+        throw invalid_argument("Le type d'option demandé n'est pas pris en compte");
     }
 
     this->n_samples = n_samples;
