@@ -13,7 +13,6 @@
 
 using namespace std;
 
-//A FAIRE : Fake Delta pour faire les test !
 class TestProfitLoss : public ::testing::Test{
 public:
     CallOption *opt;
@@ -25,7 +24,7 @@ public:
 
         auto lambda = pnl_vect_create_from_scalar(1, 0.25);
         auto spots = pnl_vect_create_from_scalar(1, 5);
-        mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots);
+        mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots, opt->nbTimeSteps_, opt->T_);
 
         //Creation de Monte Carlo
         MC = new MonteCarlo(mod,opt, pnl_rng_create(PNL_RNG_MERSENNE),100);
