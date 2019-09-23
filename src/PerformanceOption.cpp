@@ -23,6 +23,7 @@ PerformanceOption::PerformanceOption(PnlVect *lambdas , double T_, int nbTimeSte
     this->lambdas = lambdas;
     rowInf = pnl_vect_create(size_);
     rowSup = pnl_vect_create(size_);
+    tmp_res = 0;
 }
 
 PerformanceOption::~PerformanceOption() {
