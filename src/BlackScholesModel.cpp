@@ -9,17 +9,13 @@ void BlackScholesModel::asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *r
 
 void BlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSteps, PnlRng *rng, const PnlMat *past) {
     double dt = T/nbTimeSteps;
-    int index = past->m-2;
+    pnl_mat_set_subblock(path, past, 0, 0);
 
-    PnlMat sub = pnl_mat_wrap_mat_rows(past, 0, index);
-    pnl_mat_set_subblock(path, &sub, 0, 0);
-
-    index++;
+    int index = past->m-1;
     pnl_vect_rng_normal(G_, size_, rng);
     for (int c = 0; c < size_; ++c) {
-        MLET(path, index, c) = next(MGET(past, index, c), c, (index+1)*dt-t, r_);
+        MLET(path, index, c) = next(MGET(past, index, c), c, index * dt - t, r_);
     }
-
     completePath(path, nbTimeSteps, rng, dt, index+1, r_);
 }
 
