@@ -88,16 +88,17 @@ public:
      */
     virtual ~BlackScholesModel();
 
-    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index);
     /**
-     * Complete La matrice path avec le modèle de B&S à partir de l'indice de ligne index
-     * @param path La matrice à completer
-     * @param nbTimeSteps Le nombre de step entre 0 et T
-     * @param rng Le simulateur
-     * @param dt (ti+1 - ti)
-     * @param index L'indice à partir duquel on complete la matrice
-     * @param r Le taux d'interêt
-     */
+    * Complete La matrice path avec le modèle de B&S à partir de l'indice de ligne index
+    * @param path La matrice à completer
+    * @param nbTimeSteps Le nombre de step entre 0 et T
+    * @param rng Le simulateur
+    * @param dt (ti+1 - ti)
+    * @param index L'indice à partir duquel on complete la matrice
+    * @param r Le taux d'interêt
+    */
+    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index);
+
 
     /**
      * Simule une réalisation du marché.

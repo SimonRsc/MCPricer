@@ -52,7 +52,19 @@ TEST_F(BSTest, test_bs1Dim) {
     auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot, 10, 10);
     PnlMat *path = pnl_mat_create(11, 1);
     BS->asset(path, 10, 10, rng_);
-    pnl_mat_print(path);
+    double r[11] = {10.000000,
+            9.345968,
+            6.898286,
+            9.966401,
+            6.878897,
+            5.910790,
+            5.012813,
+            4.990035,
+            5.492639,
+            5.422659,
+            5.840130};
+    PnlMat *result = pnl_mat_create_from_ptr(11,1, r);
+    ASSERT_EQ(pnl_mat_isequal(result, path, 0.1), 1);
     pnl_mat_free(&path);
     delete BS;
 }
@@ -63,8 +75,6 @@ TEST_F(BSTest, test_bs5Dim) {
     auto *BS = new BlackScholesModel(5, 0.02, 0.5, vol, spot, 10, 10);
     PnlMat *path = pnl_mat_create(11, 5);
     BS->asset(path, 10, 10, rng_);
-    cout << "\n";
-    pnl_mat_print(path);
     pnl_mat_free(&path);
     delete BS;
 }
@@ -77,9 +87,29 @@ TEST_F(BSTest, test_bsAsset2_1Dim) {
     PnlMat *past = pnl_mat_create_from_scalar(11, 1, 10);
 
     BS->asset(path, 10, 20, 20, rng_, past);
-
-    std::cout << "---------------------" << "\n";
-    pnl_mat_print(path);
+    double r[21] = {10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            10.000000,
+            9.345968,
+            6.898286,
+            9.966401,
+            6.878897,
+            5.910790,
+            5.012813,
+            4.990035,
+            5.492639,
+            5.422659,
+            5.840130,
+            4.963433};
+    PnlMat *result = pnl_mat_create_from_ptr(21,1, r);
+    ASSERT_EQ(pnl_mat_isequal(result, path, 0.1), 1);
     pnl_mat_free(&path);
     delete BS;
 }
@@ -92,11 +122,10 @@ TEST_F(BSTest, test_bsShift) {
     PnlMat *path = pnl_mat_create_from_scalar(10, 5, 10);
     BS->shiftAsset(shift, path, 2, 1, 5, 1);
 
-    std::cout << "\n" << "-------------" << "\n";
-    pnl_mat_print(path);
-    std::cout << "---------------" << "\n";
-    pnl_mat_print(shift);
-
+    EXPECT_EQ(MGET(shift, 5, 2), 20);
+    EXPECT_EQ(MGET(shift, 4, 2), 10);
+    EXPECT_EQ(MGET(shift, 1, 1), 10);
+    EXPECT_EQ(MGET(shift, 9, 4), 10);
 
     pnl_mat_free(&path);
     delete BS;
@@ -111,11 +140,6 @@ TEST_F(BSTest, test_bsSimul) {
 
     BS->trend_ = pnl_vect_create_from_scalar(5, 0.2);
     BS->simul_market(simul, 10, 10, rng_);
-
-    std::cout << "\n" << "-------------" << "\n";
-    pnl_mat_print(simul);
-    std::cout << "---------------" << "\n";
-
 
     pnl_mat_free(&simul);
     delete BS;
