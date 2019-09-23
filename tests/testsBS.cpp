@@ -26,7 +26,7 @@ protected:
 };
 
 TEST_F(BSTest, test_cholesky) {
-    auto *BS = new BlackScholesModel(2, 0.02, 0.5, pnl_vect_create_from_scalar(2, 0.2), pnl_vect_create_from_scalar(2,10));
+    auto *BS = new BlackScholesModel(2, 0.02, 0.5, pnl_vect_create_from_scalar(2, 0.2), pnl_vect_create_from_scalar(2,10), 10, 10);
     PnlMat *L = BS->L_;
     PnlMat *result = pnl_mat_mult_mat(L, pnl_mat_transpose(L));
     PnlMat *id = pnl_mat_create_from_scalar(2,2,0.5);
@@ -40,16 +40,16 @@ TEST_F(BSTest, test_cholesky) {
 TEST_F(BSTest, test_bsNext) {
     PnlVect *vol = pnl_vect_create_from_scalar(2, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(2,10);
-    auto *BS = new BlackScholesModel(2, 0.02, 0, vol, spot);
+    auto *BS = new BlackScholesModel(2, 0.02, 0, vol, spot, 10, 10);
     pnl_vect_rng_normal(BS->G_, BS->size_, rng_);
-    EXPECT_NEAR(0.934, BS->next(1, 0, 1, 0.02), 0.01);
+    EXPECT_NEAR(0.934, BS->next(1, 0, 0.02), 0.01);
     delete BS;
 }
 
 TEST_F(BSTest, test_bs1Dim) {
     PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(1,10);
-    auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot);
+    auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot, 10, 10);
     PnlMat *path = pnl_mat_create(11, 1);
     BS->asset(path, 10, 10, rng_);
     pnl_mat_print(path);
@@ -60,7 +60,7 @@ TEST_F(BSTest, test_bs1Dim) {
 TEST_F(BSTest, test_bs5Dim) {
     PnlVect *vol = pnl_vect_create_from_scalar(5, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(5,10);
-    auto *BS = new BlackScholesModel(5, 0.02, 0.5, vol, spot);
+    auto *BS = new BlackScholesModel(5, 0.02, 0.5, vol, spot, 10, 10);
     PnlMat *path = pnl_mat_create(11, 5);
     BS->asset(path, 10, 10, rng_);
     cout << "\n";
@@ -72,7 +72,7 @@ TEST_F(BSTest, test_bs5Dim) {
 TEST_F(BSTest, test_bsAsset2_1Dim) {
     PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(1,10);
-    auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot);
+    auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot, 20, 20);
     PnlMat *path = pnl_mat_create(21, 1);
     PnlMat *past = pnl_mat_create_from_scalar(11, 1, 10);
 
@@ -87,7 +87,7 @@ TEST_F(BSTest, test_bsAsset2_1Dim) {
 TEST_F(BSTest, test_bsShift) {
     PnlVect *vol = pnl_vect_create_from_scalar(1, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(1,10);
-    auto *BS = new BlackScholesModel(5, 0.02, 0, vol, spot);
+    auto *BS = new BlackScholesModel(5, 0.02, 0, vol, spot, 10, 10);
     PnlMat *shift = pnl_mat_create(10, 5);
     PnlMat *path = pnl_mat_create_from_scalar(10, 5, 10);
     BS->shiftAsset(shift, path, 2, 1, 5, 1);
@@ -105,7 +105,7 @@ TEST_F(BSTest, test_bsShift) {
 TEST_F(BSTest, test_bsSimul) {
     PnlVect *vol = pnl_vect_create_from_scalar(5, 0.2);
     PnlVect *spot = pnl_vect_create_from_scalar(5,10);
-    auto *BS = new BlackScholesModel(5, 0.02, 0, vol, spot);
+    auto *BS = new BlackScholesModel(5, 0.02, 0, vol, spot, 10, 10);
 
     PnlMat *simul = pnl_mat_create(11, 5);
 

@@ -34,8 +34,8 @@ void FakeBlackScholesModel::asset(PnlMat *path, double t, double T, int nbTimeSt
     }
 }
 
-FakeBlackScholesModel::FakeBlackScholesModel(int size, double r, double rho, PnlVect* sigma, PnlVect* spot):
-BlackScholesModel(size, r, rho, sigma, spot)
+FakeBlackScholesModel::FakeBlackScholesModel(int size, double r, double rho, PnlVect* sigma, PnlVect* spot, int nb, double T):
+BlackScholesModel(size, r, rho, sigma, spot, nb, T)
 {
 
 }
