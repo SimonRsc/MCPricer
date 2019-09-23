@@ -13,8 +13,11 @@ public:
     int size_; /// nombre d'actifs du modèle
     double r_; /// taux d'intérêt
     double rho_; /// paramètre de corrélation
+    double dt_; /// T/nbTimeStep
+    double sdt_; /// sqrt(dt)
     PnlVect *trend_; /// tendance du modèle
     PnlVect *sigma_; /// vecteur de volatilités
+    PnlVect *sigma2r_;
     PnlVect *spot_; /// valeurs initiales des sous-jacents
     PnlVect *G_; ///Vecteur de loi normale
     PnlMat *L_; /// Factorisation de Cholesky de la matrice Г
@@ -74,13 +77,13 @@ public:
      * @param randomGenerator le générateur aléatoire du modèle
      * @return La prochaine valeur de l'actif dans le modèle
      */
-    double next(double Std, int productIndex, double dt, double r);
+    double next(double Std, int productIndex, double r);
 
-    BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot);
+    BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot, int nbTimeSteps, double T);
 
     virtual ~BlackScholesModel();
 
-    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, double dt, int index, double r);
+    void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index, double r);
 
     void simul_market(PnlMat* market, double H, double endDate, PnlRng *rng);
 };

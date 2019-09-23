@@ -40,7 +40,7 @@ ReadData::ReadData(char *argv) {
     P->extract("payoff coefficients", payoff_coeff, size);
 
     if (model_type == "bs") {
-        model = new BlackScholesModel(size, r, correlation, sigma, spot);
+        model = new BlackScholesModel(size, r, correlation, sigma, spot, timestep_number, T);
     } else {
         // TODO Bad model (maybe we'll use another model during the PEPS)
     }
