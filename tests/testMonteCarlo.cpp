@@ -17,13 +17,11 @@ class MonteCarloTests : public ::testing::Test{
 
     virtual void SetUp(){
 
-        //Création d'un modele BS
-        //BlackScholesModel *mod = new BlackScholesModel(1, 0.02, 0, pnl_vect_create_from_scalar(1, 0.25), pnl_vect_create_from_scalar(1, 10));
         auto lambda = pnl_vect_create_from_scalar(1, 1);
         auto spots = pnl_vect_create_from_scalar(1, 5);
 
         opt = new BasketOption(lambda, 5, 5,5, 1);
-        mod = new FakeBlackScholesModel(1, 0.01, 0.5,lambda, spots, 5, 5);
+        mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots, 5, 5);
 
         //Creation de Monte Carlo
         MC = new MonteCarlo(mod, opt, pnl_rng_create(PNL_RNG_MERSENNE), 1);
@@ -34,7 +32,7 @@ class MonteCarloTests : public ::testing::Test{
     virtual void TearDown(){
 
         delete mod;
-       delete opt;
+        delete opt;
         delete MC;
     }
 };
