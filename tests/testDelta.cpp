@@ -168,7 +168,7 @@ TEST_F(TestDelta, Basket_1_t) {
 }
 
 TEST_F(TestDelta, Basket_2_t) {
-    char arg[] = "basket_2.dat";
+    char arg[] = "";//"basket_2.dat";
     auto rd = new ReadData(arg);
     auto mod_ = rd->getModel();
     auto opt_ = rd->getOption();

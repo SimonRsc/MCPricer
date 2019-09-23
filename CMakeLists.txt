@@ -12,7 +12,7 @@ if (CXX)
 endif (CXX)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
-
+set ( CMAKE_CXX_FLAGS "-O3" )
 # Release or Debug
 if (NOT CMAKE_BUILD_TYPE)
     message(STATUS "Setting build type to 'Debug' as none was specified.")
