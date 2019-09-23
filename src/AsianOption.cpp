@@ -23,7 +23,7 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     return_payoff = 0;
-    for (int Num = 0 ; Num < nbTimeSteps_ ; Num++){
+    for (int Num = 0 ; Num < nbTimeSteps_+1 ; Num++){
         pnl_mat_get_row(tmp_, path, Num);
         return_payoff += pnl_vect_scalar_prod(tmp_, lambdas);
     }
