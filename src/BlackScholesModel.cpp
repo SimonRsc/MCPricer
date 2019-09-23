@@ -46,7 +46,7 @@ double BlackScholesModel::next(double Std, int productIndex){
 double BlackScholesModel::next(double Std, int productIndex, double r){
     pnl_mat_get_row(Ld_, L_, productIndex);
     double vol = GET(sigma_, productIndex);
-    return Std*exp( (r_ - vol*vol/2)*dt_+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(Ld_, G_) );
+    return Std*exp( (r - vol*vol/2)*dt_+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(Ld_, G_) );
 }
 
 BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot, int nbTimeSteps,
