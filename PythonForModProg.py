@@ -192,7 +192,7 @@ def run_singleexec_test(exe_fullpath, action):
         print("Running ", proc_args)
         try:
             start_time = time.time()
-            exec_output = subprocess.run(proc_args, stdout=subprocess.PIPE, timeout=60, check=True)
+            exec_output = subprocess.run(proc_args, stdout=subprocess.PIPE, timeout=1000, check=True)
             end_time = time.time()
             exec_result = json.loads(exec_output.stdout.decode('utf-8'))
             dict_result = {
