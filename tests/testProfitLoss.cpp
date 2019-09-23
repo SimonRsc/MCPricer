@@ -36,7 +36,6 @@ public:
 
     virtual void TearDown(){
         delete mod;
-        delete opt;
     }
 };
 
