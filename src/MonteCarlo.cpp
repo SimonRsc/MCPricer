@@ -30,7 +30,7 @@ void MonteCarlo::price(double &prix, double &st_dev){
         mod_->asset(path, T, N, this->rng_);
         phi = this->opt_->payoff(path);
         sum += phi;
-        sumSquare += pow(phi, 2);
+        sumSquare += phi * phi;
     }
 
     pnl_mat_free(& path);
@@ -39,7 +39,7 @@ void MonteCarlo::price(double &prix, double &st_dev){
 
     //Calcul de l'estimateur
     estim = (double) exp(-2 * r * T) *
-            ((sumSquare / M) - pow(sum / M,2));
+            ((sumSquare / M) - (sum / M) * (sum / M));
 
     //Calcul de st_dev
     st_dev = sqrt(estim) / sqrt(M);
@@ -65,7 +65,7 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &st_de
         phi = this->opt_->payoff(path);
 
         sum += phi;
-        sumSquare += pow(phi, 2);
+        sumSquare += phi * phi;
     }
 
     pnl_mat_free(& path);
@@ -73,7 +73,7 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &st_de
     prix = exp(-r * (T - t)) * sum / M;
 
     //Calcul de l'estimateur
-    estim = (double) exp(-2 * r * (T - t)) * ((sumSquare / M) - pow(sum / M,2));
+    estim = (double) exp(-2 * r * (T - t)) * ((sumSquare / M) - (sum / M) * (sum / M));
 
     //Calcul de st_dev
     st_dev = sqrt(estim) / sqrt(M);
@@ -114,16 +114,17 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
             mod_->shiftAsset(shift_path, path, d, -h, t, dt);
             phi_minus = this->opt_->payoff(shift_path);
             sum += (phi_plus - phi_minus);
-            sumSquare += pow(phi_plus - phi_minus, 2);
+            sumSquare += (phi_plus - phi_minus) * (phi_plus - phi_minus);
         }
         st = MGET(past, past->m -1, d);
         LET(delta, d) = sum * exp(-r * (T - t)) /
                 (M * 2 * st * h);
         estim = exp(-2 * r * (T - t)) *
-                     ((sumSquare / M) - pow(sum / M,2)) / pow(2 * st * h, 2);
+                     ((sumSquare / M) - (sum / M) * (sum / M)) / (4 * st * st * h * h);
         LET(st_dev, d) = sqrt(estim) / sqrt(M);
     }
-        pnl_mat_free(&shift_path);
+    pnl_mat_free(&shift_path);
+    pnl_mat_free(&path);
 }
 
 MonteCarlo::MonteCarlo(BlackScholesModel *mod, Option *opt, PnlRng *rng, int nbSamples) : mod_(mod), opt_(opt),

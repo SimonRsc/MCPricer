@@ -71,10 +71,11 @@ public:
 
     /**
      * Calcule la prochaine itération du modèle de Black and Scholes pour un actif donné.
+     * Penser à modifier G avant chaque appel.
      * @param Std La précédente valeur de l'actif
      * @param productIndex l'index de l'actif dans sigma et spot
      * @param dt (ti+1 - ti)
-     * @param randomGenerator le générateur aléatoire du modèle
+     * @param r le taux d'interêt
      * @return La prochaine valeur de l'actif dans le modèle
      */
     double next(double Std, int productIndex, double r);
@@ -82,10 +83,29 @@ public:
 
     BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot, int nbTimeSteps, double T);
 
+    /**
+     * Destructeur
+     */
     virtual ~BlackScholesModel();
 
     void completePath(PnlMat *path, int nbTimeSteps, PnlRng *rng, int index);
+    /**
+     * Complete La matrice path avec le modèle de B&S à partir de l'indice de ligne index
+     * @param path La matrice à completer
+     * @param nbTimeSteps Le nombre de step entre 0 et T
+     * @param rng Le simulateur
+     * @param dt (ti+1 - ti)
+     * @param index L'indice à partir duquel on complete la matrice
+     * @param r Le taux d'interêt
+     */
 
+    /**
+     * Simule une réalisation du marché.
+     * @param[out] Market La matrice à remplir
+     * @param[in] H Le nombre de step en 0 et endDate
+     * @param[in] endDate La date de fin de la simulation
+     * @param[in] rng Le simulateur
+     */
     void simul_market(PnlMat* market, double H, double endDate, PnlRng *rng);
 };
 

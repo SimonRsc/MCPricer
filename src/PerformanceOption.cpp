@@ -22,6 +22,8 @@ double PerformanceOption::payoff(const PnlMat *path) {
             payoff+= tmp_res;
         }
     }
+    pnl_vect_free(&rowInf);
+    pnl_vect_free(&rowSup);
     return payoff + 1;
 
 }

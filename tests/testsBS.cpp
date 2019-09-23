@@ -14,7 +14,7 @@ protected:
     }
 
     virtual void SetUp() {
-        pnl_rng_sseed(rng_, time(0));
+        pnl_rng_sseed(rng_, 0);
     }
 
     virtual void TearDown() {
@@ -74,7 +74,7 @@ TEST_F(BSTest, test_bsAsset2_1Dim) {
     PnlVect *spot = pnl_vect_create_from_scalar(1,10);
     auto *BS = new BlackScholesModel(1, 0.02, 0, vol, spot, 20, 20);
     PnlMat *path = pnl_mat_create(21, 1);
-    PnlMat *past = pnl_mat_create_from_scalar(10, 1, 10);
+    PnlMat *past = pnl_mat_create_from_scalar(11, 1, 10);
 
     BS->asset(path, 10, 20, 20, rng_, past);
 
