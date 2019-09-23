@@ -9,21 +9,23 @@
 #include <assert.h>
 #include "gtest/gtest.h"
 #include "../src/ProfitLoss.h"
+#include "../src/BasketOption.h"
 #include <sstream>
 
 using namespace std;
 
 class TestProfitLoss : public ::testing::Test{
 public:
-    CallOption *opt;
+    BasketOption *opt;
     BlackScholesModel *mod;
     MonteCarlo *MC;
 
     virtual void SetUp(){
-        opt = new CallOption(1.5, 5, 5, 1);
 
-        auto lambda = pnl_vect_create_from_scalar(1, 0.25);
+
+        auto lambda = pnl_vect_create_from_scalar(1, 1);
         auto spots = pnl_vect_create_from_scalar(1, 5);
+        opt = new BasketOption(lambda, 1.5, 5, 5, 1);
         mod = new BlackScholesModel(1, 0.01, 0.5,lambda, spots, opt->nbTimeSteps_, opt->T_);
 
         //Creation de Monte Carlo
@@ -34,7 +36,6 @@ public:
 
     virtual void TearDown(){
         delete mod;
-        delete opt;
     }
 };
 

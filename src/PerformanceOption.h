@@ -7,9 +7,10 @@
 class PerformanceOption : public Option{
 
 private:
-    PnlVect *rowInf;
     PnlVect *rowSup;
     double tmp_res;
+    double sumInf;
+    double sumSup;
 public:
 
     ///
