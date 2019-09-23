@@ -5,6 +5,9 @@
 
 /// Classe d'une option de type Basket
 class BasketOption : public Option{
+private:
+    PnlVect * tmp_;
+    bool isSell;
 public:
 
     ///

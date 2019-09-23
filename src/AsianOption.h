@@ -7,6 +7,9 @@
 ///
 class AsianOption : public Option {
 
+private:
+    PnlVect * tmp_;
+    double steps;
 public :
     ///
     /// \param lambdas vecteur des lambdas

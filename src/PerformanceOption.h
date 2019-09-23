@@ -5,6 +5,11 @@
 /// Classe pour une option de type Performance
 
 class PerformanceOption : public Option{
+
+private:
+    PnlVect *rowInf;
+    PnlVect *rowSup;
+    double tmp_res;
 public:
 
     ///

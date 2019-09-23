@@ -11,12 +11,14 @@ public:
     double T_; /// maturité
     int nbTimeSteps_; /// nombre de pas de temps de discrétisation
     int size_; /// dimension du modèle, redondant avec BlackScholesModel::size_
+    double return_payoff;
 
     Option(double T, int nbTimeSteps, int size){
         //assert(T <= nbTimeSteps);
         this->T_ = T;
         this->nbTimeSteps_ =  nbTimeSteps;
         this->size_ = size;
+        this->return_payoff = 0;
     }
 
      virtual ~Option() = default;
