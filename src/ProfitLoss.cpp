@@ -22,7 +22,8 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
 
     PnlVect * tmpVect = pnl_vect_create_from_zero(path->n);
 
-    PnlMat *past = pnl_mat_create(1, 1);
+    PnlMat *past = pnl_mat_create(N + 1, opt->size_);
+    pnl_mat_resize(past, 2, opt->size_);
     pnl_mat_extract_subblock(past, path, 0, 1, 0, path->n);
 
     PnlVect *S = pnl_vect_create(path->n);
@@ -39,8 +40,9 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     for(int i = 1; i <= H; i++){
 
         //Creation de la sous matrice past pour les calculs du delta
-        if(subIndex % (H/N) == 0){
-            pnl_mat_add_row(past, past->m, tmpVect);
+        if (subIndex % (H/N) == 0){
+            pnl_mat_resize(past, past->m + 1, past->n);
+            pnl_mat_set_row(past, tmpVect, past->m -1);
             subIndex = 0;
 
         }
@@ -80,24 +82,3 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
     pnl_mat_free(&past);
 
 }
-
-/*void ProfitLoss::PastForDelta(MonteCarlo *monteCarlo, PnlMat *past, int H, double T, PnlMat *newPast){
-    int N = monteCarlo->opt_->nbTimeSteps_;
-    double dt = T/N;
-    double dh = T/H;
-
-    PnlVect *V = pnl_vect_create(past->n);
-    int indexPast = 0;
-
-    for(int i=0; i< past->m; i++){
-        if(ABS(dh * i - dt * indexPast) < 0.0001){
-
-            pnl_mat_get_row(V, past, i);
-            pnl_mat_set_row(newPast, V, indexPast);
-            indexPast++;
-        }
-    }
-
-    pnl_mat_get_row(V, past, past->m-1);
-    pnl_mat_set_row(newPast, V, newPast->m-1);
-}*/
