@@ -23,9 +23,9 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     return_payoff = 0;
-    for (int assetNum = 0 ; assetNum < size_ ; assetNum++){
-        pnl_mat_get_col(tmp_, path, assetNum);
-        return_payoff += GET(lambdas, assetNum) * pnl_vect_sum(tmp_);
+    for (int Num = 0 ; Num < nbTimeSteps_ ; Num++){
+        pnl_mat_get_row(tmp_, path, Num);
+        return_payoff += pnl_vect_scalar_prod(tmp_, lambdas);
     }
     return_payoff /= path->m;
     return_payoff -= K_;
