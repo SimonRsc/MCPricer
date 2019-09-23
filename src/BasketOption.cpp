@@ -7,9 +7,7 @@
     return_payoff = 0;
     pnl_mat_get_row(tmp_, path,path->m-1);
     pnl_vect_mult_vect_term(tmp_,lambdas);
-    return_payoff = pnl_vect_sum(tmp_);
-
-    return_payoff -= this->K_;
+    return_payoff = pnl_vect_sum(tmp_) - this->K_;
 
     return return_payoff >= 0 ? isSell ? -return_payoff : return_payoff : 0;
 }

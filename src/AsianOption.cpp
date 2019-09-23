@@ -23,16 +23,15 @@ AsianOption::~AsianOption() {
 
 double AsianOption::payoff(const PnlMat *path) {
     return_payoff = 0;
-    steps = 1. / path->m;
     for (int assetNum = 0 ; assetNum < size_ ; assetNum++){
         pnl_mat_get_col(tmp_, path, assetNum);
-        return_payoff += GET(lambdas, assetNum) * steps * pnl_vect_sum(tmp_);
+        return_payoff += GET(lambdas, assetNum) * pnl_vect_sum(tmp_);
     }
+    return_payoff /= path->m;
     return_payoff -= K_;
     if(return_payoff > 0){
         return return_payoff;
     }else{
         return 0;
     }
-    return (return_payoff >= 0) ? return_payoff : 0;
 }
