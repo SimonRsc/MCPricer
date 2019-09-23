@@ -5,6 +5,8 @@ using namespace std;
 
 MonteCarlo::~MonteCarlo() {
     pnl_rng_free(&rng_);
+    pnl_mat_free(&path);
+    pnl_mat_free(&shift_path);
 }
 
 void MonteCarlo::price(double &prix, double &st_dev){
@@ -14,13 +16,10 @@ void MonteCarlo::price(double &prix, double &st_dev){
     double sumSquare = 0;
     double phi = 0;
 
-    int D = this->mod_->size_;
     int N = this->opt_->nbTimeSteps_;
     int M = this->nbSamples_;
     double T = this->opt_->T_;
     double r = this->mod_->r_;
-
-    PnlMat *path = pnl_mat_create(N+1, D);
 
     double estim = 0;
 
@@ -32,8 +31,6 @@ void MonteCarlo::price(double &prix, double &st_dev){
         sum += phi;
         sumSquare += phi * phi;
     }
-
-    pnl_mat_free(& path);
 
     prix = exp(-r * T) * sum / M;
 
@@ -51,13 +48,10 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &st_de
     double phi = 0;
     double estim = 0;
 
-    int D = this->mod_->size_;
     int N = this->opt_->nbTimeSteps_;
     int M = this->nbSamples_;
     double T = this->opt_->T_;
     double r = this->mod_->r_;
-
-    PnlMat *path = pnl_mat_create(N + 1, D);
 
     for(int j = 0; j < M; j++){
 
@@ -67,8 +61,6 @@ void MonteCarlo::price(const PnlMat *past, double t, double &prix, double &st_de
         sum += phi;
         sumSquare += phi * phi;
     }
-
-    pnl_mat_free(& path);
 
     prix = exp(-r * (T - t)) * sum / M;
 
@@ -97,9 +89,6 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
     double dt = T / N;
     double h = 0.1;
 
-    PnlMat *path = pnl_mat_create(N + 1, D);
-    PnlMat *shift_path = pnl_mat_create(N + 1, D);
-
     for (int d = 0; d < D; d++) {
         sum = 0;
         sumSquare = 0;
@@ -123,13 +112,12 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
                      ((sumSquare / M) - (sum / M) * (sum / M)) / (4 * st * st * h * h);
         LET(st_dev, d) = sqrt(estim) / sqrt(M);
     }
-    pnl_mat_free(&shift_path);
-    pnl_mat_free(&path);
 }
 
 MonteCarlo::MonteCarlo(BlackScholesModel *mod, Option *opt, PnlRng *rng, int nbSamples) : mod_(mod), opt_(opt),
                                                                                           rng_(rng),
                                                                                           nbSamples_(nbSamples) {
     pnl_rng_sseed(rng_, time(0));
-
+    path = pnl_mat_create(opt->nbTimeSteps_+1, mod->size_);
+    shift_path = pnl_mat_create(opt->nbTimeSteps_+1, mod->size_);
 }

@@ -21,12 +21,11 @@ protected:
 TEST_F(TestDelta, Asian_0) {
     char arg[] = "asian.dat";
     auto rd = new ReadData(arg);
-    auto mc = new MonteCarlo();
-    mc->mod_ = rd->getModel();
-    mc->opt_ = rd->getOption();
-    mc->nbSamples_ = 50000;
-    mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(mc->rng_, 0);
+    auto mod_ = rd->getModel();
+    auto opt_ = rd->getOption();
+    auto nbSamples_ = rd->getNombreSample();
+    auto rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    auto mc = new MonteCarlo(mod_, opt_, rng_, nbSamples_);
     auto deltas = pnl_vect_create(2);
     auto st_dev = pnl_vect_create(2);
     auto past = pnl_mat_create_from_scalar(1, 2, 100);
@@ -42,12 +41,11 @@ TEST_F(TestDelta, Asian_0) {
 TEST_F(TestDelta, Basket_0) {
     char arg[] = "basket.dat";
     auto rd = new ReadData(arg);
-    auto mc = new MonteCarlo();
-    mc->mod_ = rd->getModel();
-    mc->opt_ = rd->getOption();
-    mc->nbSamples_ = 50000;
-    mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(mc->rng_, time(0));
+    auto mod_ = rd->getModel();
+    auto opt_ = rd->getOption();
+    auto nbSamples_ = rd->getNombreSample();
+    auto rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    auto mc = new MonteCarlo(mod_, opt_, rng_, nbSamples_);
     auto deltas = pnl_vect_create(40);
     auto st_dev = pnl_vect_create(40);
     auto past = pnl_mat_create_from_scalar(1, 40, 100);
@@ -64,12 +62,11 @@ TEST_F(TestDelta, Basket_0) {
 TEST_F(TestDelta, Basket_1_0) {
     char arg[] = "basket_1.dat";
     auto rd = new ReadData(arg);
-    auto mc = new MonteCarlo();
-    mc->mod_ = rd->getModel();
-    mc->opt_ = rd->getOption();
-    mc->nbSamples_ = 50000;
-    mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(mc->rng_, time(0));
+    auto mod_ = rd->getModel();
+    auto opt_ = rd->getOption();
+    auto nbSamples_ = rd->getNombreSample();
+    auto rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    auto mc = new MonteCarlo(mod_, opt_, rng_, nbSamples_);
     auto deltas = pnl_vect_create(40);
     auto st_dev = pnl_vect_create(40);
     auto past = pnl_mat_create_from_scalar(1, 40, 100);
@@ -86,12 +83,11 @@ TEST_F(TestDelta, Basket_1_0) {
 TEST_F(TestDelta, Performance_0) {
     char arg[] = "perf.dat";
     auto rd = new ReadData(arg);
-    auto mc = new MonteCarlo();
-    mc->mod_ = rd->getModel();
-    mc->opt_ = rd->getOption();
-    mc->nbSamples_ = 50000;
-    mc->rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(mc->rng_, time(0));
+    auto mod_ = rd->getModel();
+    auto opt_ = rd->getOption();
+    auto nbSamples_ = rd->getNombreSample();
+    auto rng_ = pnl_rng_create(PNL_RNG_MERSENNE);
+    auto mc = new MonteCarlo(mod_, opt_, rng_, nbSamples_);
     auto deltas = pnl_vect_create(5);
     auto st_dev = pnl_vect_create(5);
     auto past = pnl_mat_create_from_scalar(1, 5, 100);
@@ -168,7 +164,7 @@ TEST_F(TestDelta, Basket_1_t) {
 }
 
 TEST_F(TestDelta, Basket_2_t) {
-    char arg[] = "";//"basket_2.dat";
+    char arg[] = "basket_2.dat";
     auto rd = new ReadData(arg);
     auto mod_ = rd->getModel();
     auto opt_ = rd->getOption();
