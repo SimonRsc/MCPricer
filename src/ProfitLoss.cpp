@@ -72,6 +72,7 @@ void ProfitLoss::PAndL(MonteCarlo *monteCarlo, PnlMat *path, int H, double T, do
 //            34,6570315;
 
     pnl_vect_free(&dIc);
+    pnl_vect_free(&tmpVect);
     pnl_vect_free(&delta);
     pnl_vect_free(&deltaMoins);
     pnl_vect_free(&deltaTmp);

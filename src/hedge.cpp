@@ -28,4 +28,6 @@ int main(int argc, char**argv){
     HedgingResults res(prix,ic,covErr);
     std::cout << res << std::endl;
 
+    pnl_mat_free(&past);
+    delete rd;
 }
