@@ -39,14 +39,14 @@ void BlackScholesModel::CholeskyCorrelationMatrix() {
 }
 
 double BlackScholesModel::next(double Std, int productIndex){
-    pnl_mat_get_row(Ld_, L_, productIndex);
-    return Std*exp( GET(sigma2r_, productIndex)+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(Ld_, G_) );
+    Ld_ = pnl_vect_wrap_mat_row(L_, productIndex);
+    return Std*exp( GET(sigma2r_, productIndex)+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(&Ld_, G_) );
 }
 
 double BlackScholesModel::next(double Std, int productIndex, double r){
-    pnl_mat_get_row(Ld_, L_, productIndex);
+    Ld_ = pnl_vect_wrap_mat_row(L_, productIndex);
     double vol = GET(sigma_, productIndex);
-    return Std*exp( (r - vol*vol/2)*dt_+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(Ld_, G_) );
+    return Std*exp( (r - vol*vol/2)*dt_+GET(sigma_, productIndex)*sdt_*pnl_vect_scalar_prod(&Ld_, G_) );
 }
 
 BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *sigma, PnlVect *spot, int nbTimeSteps,
@@ -54,7 +54,6 @@ BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *si
         size), r_(r), rho_(rho), sigma_(sigma), spot_(spot) {
     CholeskyCorrelationMatrix();
     G_ = pnl_vect_create(size_);
-    Ld_= pnl_vect_create(size_);
     dt_ = T/nbTimeSteps;
     sdt_ = sqrt(dt_);
     // Compute sigma2r
@@ -71,7 +70,6 @@ BlackScholesModel::BlackScholesModel(int size, double r, double rho, PnlVect *si
 BlackScholesModel::~BlackScholesModel() {
     pnl_mat_free(&L_);
     pnl_vect_free(&G_);
-    pnl_vect_free(&Ld_);
     pnl_vect_free(&this->spot_);
     pnl_vect_free(&this->sigma_);
 
